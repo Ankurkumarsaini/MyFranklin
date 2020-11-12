@@ -13,10 +13,10 @@ const app = express()
 const port = process.env.PORT || 8200
 
 
-app.engine('html', engine);
+//app.engine('html', engine);
 
 // view engine setup
-app.set('view engine', 'html');
+//app.set('view engine', 'html');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
