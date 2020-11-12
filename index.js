@@ -5,7 +5,7 @@ const https = require('https')
 // import env variables
 require('dotenv').config()
 
-//var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/index');
 //var ideasRouter = require('./routes/ideas');
 var demoRouter = require('./routes/demo');
 
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 })
 
 
-//app.use('/', indexRouter);
+app.use('/', indexRouter);
 
 //app.use('/ideas', ideasRouter);
 //app.use('/gcptasks', gcpTasksRouter);
