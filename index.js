@@ -5,8 +5,8 @@ const https = require('https')
 // import env variables
 require('dotenv').config()
 
-var indexRouter = require('./routes/index');
-var ideasRouter = require('./routes/ideas');
+//var indexRouter = require('./routes/index');
+//var ideasRouter = require('./routes/ideas');
 var demoRouter = require('./routes/demo');
 
 const app = express()
@@ -19,9 +19,9 @@ app.get('/', (req, res) => {
 	res.status(200).send('Server is working.')
 })
 
-app.use('/', indexRouter);
-app.use('/ideas', ideasRouter);
-app.use('/gcptasks', gcpTasksRouter);
+//app.use('/', indexRouter);
+//app.use('/ideas', ideasRouter);
+//app.use('/gcptasks', gcpTasksRouter);
 app.use('/demo',demoRouter);
 
 app.listen(port, () => {
