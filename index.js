@@ -5,7 +5,7 @@ const https = require('https')
 // import env variables
 require('dotenv').config()
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 //var ideasRouter = require('./routes/ideas');
 var demoRouter = require('./routes/demo');
 
