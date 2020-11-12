@@ -14,6 +14,7 @@ const port = process.env.PORT || 8200
 
 
 // view engine setup
+app.set('view engine', 'pug');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
