@@ -4,6 +4,7 @@ const http = require('http')
 const https = require('https')
 // import env variables
 require('dotenv').config()
+var demoRouter = require('./routes/demo');
 
 const app = express()
 const port = process.env.PORT || 8200
@@ -14,6 +15,8 @@ app.use(express.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
 	res.status(200).send('Server is working.')
 })
+
+app.use('/demo',demoRouter);
 
 app.listen(port, () => {
 	console.log(`🌏 Server is running at http://localhost:${port}`)
