@@ -7,6 +7,7 @@ require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var ideasRouter = require('./routes/ideas');
+var gcpTasksRouter = require('./routes/gcpTasks');
 var demoRouter = require('./routes/demo');
 
 const app = express()
@@ -28,7 +29,7 @@ app.get('/', (req, res) => {
 
 app.use('/', indexRouter);
 app.use('/ideas', ideasRouter);
-//app.use('/gcptasks', gcpTasksRouter);
+app.use('/gcptasks', gcpTasksRouter);
 app.use('/demo',demoRouter);
 
 app.listen(port, () => {
