@@ -29,7 +29,7 @@ router.post('/', function (req, res, next) {
         console.log(err);
         res.send(err);
     }
-}
+});
      
 /*** buzzword handler function ***/
 function buzzWordHandler(req, res, next) {	
