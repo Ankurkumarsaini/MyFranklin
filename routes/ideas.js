@@ -19,7 +19,10 @@ router.post('/', function (req, res, next) {
 	     case "BuzzWord":
                 // corporate buzz word generator
                 buzzWordHandler(req, res, next);
-                break;	           			
+                break;	
+	    case "MathFacts":
+                mathFactsHandler(req, res, next);
+                break;
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -65,5 +68,43 @@ function buzzWordHandler(req, res, next) {
 	)
 		
 }
-            
+   
+/**** Maths Facts Handler function ***/
+
+function mathFactsHandler(req, res, next) {	
+	http.get(
+		'http://numbersapi.com/random/math',
+		responseFromAPI => {
+			let completeResponse = ''
+			responseFromAPI.on('data', chunk => {
+				completeResponse += chunk
+			})
+			responseFromAPI.on('end', () => {
+				
+				console.log(completeResponse);
+				
+				//const mymath = JSON.parse(completeResponse.text);
+				
+				const mymath = completeResponse;
+
+				let dataToSend ;
+				dataToSend = `The Question is ${mymath}`
+
+				return res.json({
+					fulfillmentText: dataToSend,
+					source: 'MathFacts'
+				})
+			})
+		},
+		error => {
+			return res.json({
+				fulfillmentText: 'Could not get results at this time',
+				source: 'MathFacts'
+			})
+		}
+	)
+		
+}
+
+
 module.exports = router;
