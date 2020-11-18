@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 
 
 router.post('/', function (req, res, next) {
- var intentName = req.body.intentname;
+ var intentName = req.body.queryResult.intent.displayName;
     console.log(intentName);
     try {
         switch (intentName) {			
