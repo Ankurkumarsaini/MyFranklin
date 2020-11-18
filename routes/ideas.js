@@ -2,8 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser')
 const rp = require('request-promise');
 var router = express.Router();
-const http = require('http')
-const https = require('https')
+const http = require('http');
+const https = require('https');
 
 
 router.get('/', function (req, res, next) {    
@@ -15,13 +15,13 @@ router.post('/', function (req, res, next) {
  var intentName = req.body.intentname;
     console.log(intentName);
     try {
-		  switch (intentName) {			
-			case "BuzzWord":
+        switch (intentName) {			
+	     case "BuzzWord":
                 // corporate buzz word generator
                 buzzWordHandler(req, res, next);
                 break;	           			
-			default:
-                logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
+		default:
+               // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
                 break;
 		  }
