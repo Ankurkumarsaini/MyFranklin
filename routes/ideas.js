@@ -132,7 +132,7 @@ function addNewIdeaWithName(req, res, next) {
 	    console.error(error)
 	  })
 	  **/
-const res=axios.post('https://hooks.slack.com/services/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',data);
+const res=axios.post('https://hooks.slack.com/services/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',data);
 console.log(res.data);
 	
 }
