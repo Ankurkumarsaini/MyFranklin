@@ -132,7 +132,7 @@ function addNewIdeaWithName(req, res, next) {
 		    ]
 		  }]
 		};
-	const yourWebHookURL='https://hooks.slack.com/services/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';
+	const yourWebHookURL='https://hooks.slack.com/services/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';
 
 	console.log('Sending slack message');
   try {
