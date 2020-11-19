@@ -123,8 +123,19 @@ function addNewIdeaWithName(req, res, next) {
                 }]
             }
 /** sending  data to the slack bot ***/
-const response=axios.post('https://hooks.slack.com/services/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',data);
-	return ;
+	try
+	{
+	  const response=axios.post('https://hooks.slack.com/services/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',data);
+		return res.json({
+					fulfillmentText: response,
+					source: 'JiraNewIdea'
+				});
+	}	
+	 catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+	
 }
 
 
