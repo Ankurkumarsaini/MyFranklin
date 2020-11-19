@@ -112,7 +112,7 @@ function mathFactsHandler(req, res, next) {
 
 /*** Jira NewIdea  Handler Functions ***/
 function addNewIdeaWithName(req, res, next) {
-	const data =const data = {
+	const data = {
                 "text": "Note: Idea has changed...",
                 "attachments": [{
                     "text": "Idea has been replaced with a slash command and is accessable by typing\n/idea",
