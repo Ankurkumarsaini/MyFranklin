@@ -110,7 +110,7 @@ function mathFactsHandler(req, res, next) {
 		
 }
 
-/*** Jira NewIdea  Handler Functions 
+/*** Jira NewIdea  Handler Functions ***/
 function addNewIdeaWithName(req, res, next) {
 	const data = {
                 "text": "Note: Idea has changed...",
@@ -131,8 +131,11 @@ function addNewIdeaWithName(req, res, next) {
 	  .catch(error => {
 	    console.error(error)
 	  })
+	  **/
+const res=axios.post('https://hooks.slack.com/services/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',data);
+console.log(res.data);
 	
 }
-**/
+
 
 module.exports = router;
