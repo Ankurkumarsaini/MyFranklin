@@ -4,6 +4,7 @@ const rp = require('request-promise');
 var router = express.Router();
 const http = require('http');
 const https = require('https');
+const axios = require('axios');
 
 
 router.get('/', function (req, res, next) {    
@@ -15,7 +16,10 @@ router.post('/', function (req, res, next) {
  var intentName = req.body.queryResult.intent.displayName;
     console.log(intentName);
     try {
-        switch (intentName) {			
+        switch (intentName) {	
+	    case "JIRA-NewIdea":                
+                addNewIdeaWithName(req, res, next);
+                break;
 	     case "BuzzWord":
                 // corporate buzz word generator
                 buzzWordHandler(req, res, next);
@@ -104,6 +108,22 @@ function mathFactsHandler(req, res, next) {
 		}
 	)
 		
+}
+
+/*** Jira NewIdea  Handler Functions ***/
+function addNewIdeaWithName(req, res, next) {
+	const data =const data = {
+                "text": "Note: Idea has changed...",
+                "attachments": [{
+                    "text": "Idea has been replaced with a slash command and is accessable by typing\n/idea",
+                    "fallback": "Idea has been replaced with a slash command and is accessable by typing\n/idea",
+                    "color": "#3AA3E3",
+                    "attachment_type": "default",
+
+                }]
+            }
+/** sending  data to the slack bot ***/
+const res=axios.post('https://hooks.slack.com/services/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',data);
 }
 
 
