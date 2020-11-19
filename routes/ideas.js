@@ -123,17 +123,6 @@ function addNewIdeaWithName(req, res, next) {
                 }]
             }
 /** sending  data to the slack bot ***/
-	const data = {
-                "text": "Note: Idea has changed...",
-                "attachments": [{
-                    "text": "Idea has been replaced with a slash command and is accessable by typing\n/idea",
-                    "fallback": "Idea has been replaced with a slash command and is accessable by typing\n/idea",
-                    "color": "#3AA3E3",
-                    "attachment_type": "default",
-
-                }]
-            }
-/** sending  data to the slack bot ***/
 	axios.post('https://hooks.slack.com/services/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',data)		
 	.then(res => {
 	    console.log(`statusCode: ${res.statusCode}`)
