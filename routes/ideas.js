@@ -6,13 +6,6 @@ const http = require('http');
 const https = require('https');
 const axios = require('axios');
 
-const { App, LogLevel } = require("@slack/bolt");
-const app = new App({
-  token: "xoxb-1514190775910-1517858624597-aJ5w0QeeJt86kMmEKQagCAN8",
-  signingSecret: "7593fc5c302a093f8b3035a7df3b2f2d",
-  // LogLevel can be imported and used to make debugging simpler
-  logLevel: LogLevel.DEBUG
-});
 
 
 router.get('/', function (req, res, next) {    
