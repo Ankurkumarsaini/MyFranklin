@@ -60,8 +60,8 @@ function HelloHandler(req,res,next){
   catch (error) {
     console.error(error);
   }
-}
 
+/*
 const response=axios.post('https://hooks.slack.com/services/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',data);
 	let dataToSend ;
 	dataToSend = `Cool Corporate Buzz Word`
@@ -69,6 +69,7 @@ const response=axios.post('https://hooks.slack.com/services/T01F45LNTSS/B01FB58L
 		fulfillmentText: dataToSend,
 		source: 'Hello'
 	});	
+*/
 }
 	
 
