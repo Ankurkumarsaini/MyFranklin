@@ -8,16 +8,6 @@ const axios = require('axios');
 
 const { App, LogLevel } = require("@slack/bolt");
 
-
-const app = new App({
-  token: "xoxb-1514190775910-1517858624597-hdWMAEcFICxAQJtpUz95WuRe",
-  signingSecret: "7593fc5c302a093f8b3035a7df3b2f2d",
-  // LogLevel can be imported and used to make debugging simpler
-  logLevel: LogLevel.DEBUG
-});
-
-
-
 router.get('/', function (req, res, next) {    
     res.send('Successfully connected to ideas');
 });
@@ -37,7 +27,7 @@ router.post('/', function (req, res, next) {
                 break;
 	   case "Hello":
                 // corporate buzz word generator
-                HelloHandler(req, res, next);
+                testHandler(req, res, next);
                 break;		
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
@@ -53,7 +43,29 @@ router.post('/', function (req, res, next) {
     }
 });
 
+function testHandler(req,res,next){
+	var options = {
+        method: 'POST',
+        url: 'https://slack.com/api/chat.postMessage',
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: 'Bearer xoxb-1514190775910-1517858624597-2djB7XwVcg9piAxVMenaShgz'
+        },
+        body: {
+            channel: 'D01F46BL5QE',
+	    attachments:'[{"color": "#3AA3E3","author_name": "Bobby Tables","author_link": "http://flickr.com/bobby/","author_icon": "http://flickr.com/icons/bobby.jpg","text": "Cool Corporate Buzz Word..."}]',
+         },
+        json: true
 
+    };
+    return rp(options)
+        .then(results => {
+            if (isLastCall) {
+                res.send("sent message to user").end();
+            }
+        });
+}
 function HelloHandler(req,res,next){
  try {	 
     // Call the chat.postMessage method using the built-in WebClient
