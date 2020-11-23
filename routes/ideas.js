@@ -6,6 +6,14 @@ const http = require('http');
 const https = require('https');
 const axios = require('axios');
 
+const { App, LogLevel } = require("@slack/bolt");
+const app = new App({
+  token: "xoxb-1514190775910-1517858624597-aJ5w0QeeJt86kMmEKQagCAN8",
+  signingSecret: "7593fc5c302a093f8b3035a7df3b2f2d",
+  // LogLevel can be imported and used to make debugging simpler
+  logLevel: LogLevel.DEBUG
+});
+
 
 router.get('/', function (req, res, next) {    
     res.send('Successfully connected to ideas');
@@ -44,15 +52,21 @@ router.post('/', function (req, res, next) {
 
 
 function HelloHandler(req,res,next){
-const data = {
-    "attachments": [
-        {
-            "fallback": "Cool Corporate Buzz Word: *",
-            "color": "#3AA3E3",
-            "attachment_type": "default",
-            "text": "Cool Corporate Buzz Word..."
-        }
-    ]
+ try {	 
+    // Call the chat.postMessage method using the built-in WebClient
+    const result = app.client.chat.postMessage({
+      // The token you used to initialize your app
+      token: "xoxb-1514190775910-1517858624597-aJ5w0QeeJt86kMmEKQagCAN8",
+      channel: 'D01F46BL5QE',	  
+      attachments:'[{"color": "#3AA3E3","text": "Cool Corporate Buzz Word..."}]',	
+    });
+
+    // Print result, which includes information about the message (like TS)
+    console.log(result);
+  }
+  catch (error) {
+    console.error(error);
+  }
 }
 
 const response=axios.post('https://hooks.slack.com/services/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',data);
