@@ -23,7 +23,11 @@ router.post('/', function (req, res, next) {
 	     case "BuzzWord":
                 // corporate buzz word generator
                 buzzWordHandler(req, res, next);
-                break;	
+                break;
+	   case "Hello":
+                // corporate buzz word generator
+                HelloHandler(req, res, next);
+                break;		
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
                 break;
@@ -37,7 +41,30 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
-     
+
+
+function HelloHandler(req,res,next){
+const data = {
+    "attachments": [
+        {
+            "fallback": "Cool Corporate Buzz Word: *",
+            "color": "#3AA3E3",
+            "attachment_type": "default",
+            "text": "Cool Corporate Buzz Word..."
+        }
+    ]
+}
+
+const response=axios.post('https://hooks.slack.com/services/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',data);
+	let dataToSend ;
+	dataToSend = `Cool Corporate Buzz Word`
+	return res.json({
+		fulfillmentText: dataToSend,
+		source: 'Hello'
+	});	
+}
+	
+
 /*** buzzword handler function ***/
 function buzzWordHandler(req, res, next) {	
 	https.get(
