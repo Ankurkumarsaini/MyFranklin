@@ -72,10 +72,11 @@ function buzzWordHandler(req, res, next) {
 				      // The token you used to initialize your app
 				      token: process.env.TOKEN,
 				      channel: 'D01F46BL5QE',	  
-					  text:'Hello world :tada:',	  
+					  //text:'Hello world :tada:',
+					    text:'',
 					  //attachments:'[{"color": "#3AA3E3","attachment_type": "default","pretext": "pre-hello","text": "Cool Corporate Buzz Word...""}]'
 					  //as_user:true,
-				          attachments:'[{"color": "#3AA3E3","author_name": "Bobby Tables","author_link": "http://flickr.com/bobby/","author_icon": "http://flickr.com/icons/bobby.jpg","text":"'+ dataToSend +'"}]',
+				          attachments:'[{"color": "#3AA3E3","text":"'+ dataToSend +'"}]',
 					  //blocks:'[{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]',
 					  //icon_emoji:':chart_with_upwards_trend:'
 				      // You could also use a blocks[] array to send richer content
