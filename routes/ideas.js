@@ -12,6 +12,13 @@ router.get('/', function (req, res, next) {
     res.send('Successfully connected to ideas');
 });
 
+const app = new App({
+  token: process.env.TOKEN,
+  signingSecret: process.env.SIGNING_TOKEN,
+  // LogLevel can be imported and used to make debugging simpler
+  logLevel: LogLevel.DEBUG
+});
+
 
 router.post('/', function (req, res, next) {
  var intentName = req.body.queryResult.intent.displayName;
@@ -24,11 +31,7 @@ router.post('/', function (req, res, next) {
 	     case "BuzzWord":
                 // corporate buzz word generator
                 buzzWordHandler(req, res, next);
-                break;
-	   case "Hello":
-                // corporate buzz word generator
-                testHandler(req, res, next);
-                break;		
+                break;	  	
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
                 break;
@@ -42,58 +45,6 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
-
-function testHandler(req,res,next){
-	var options = {
-        method: 'POST',
-        url: 'https://slack.com/api/chat.postMessage',
-        headers: {
-            Accept: 'application/json',
-            "Content-Type": "application/json; charset=utf-8",
-            Authorization: 'Bearer xoxb-1514190775910-1517858624597-2djB7XwVcg9piAxVMenaShgz'
-        },
-        body: {
-            channel: 'D01F46BL5QE',
-	    attachments:'[{"color": "#3AA3E3","author_name": "Bobby Tables","author_link": "http://flickr.com/bobby/","author_icon": "http://flickr.com/icons/bobby.jpg","text": "Cool Corporate Buzz Word..."}]',
-         },
-        json: true
-
-    };
-    return rp(options)
-        .then(results => {
-            if (isLastCall) {
-                res.send("sent message to user").end();
-            }
-        });
-}
-function HelloHandler(req,res,next){
- try {	 
-    // Call the chat.postMessage method using the built-in WebClient
-    const result = app.client.chat.postMessage({
-      // The token you used to initialize your app
-      token: "xoxb-1514190775910-1517858624597-hdWMAEcFICxAQJtpUz95WuRe",
-      channel: 'D01F46BL5QE',	  
-      attachments:'[{"color": "#3AA3E3","text": "Cool Corporate Buzz Word..."}]',	
-    });
-
-    // Print result, which includes information about the message (like TS)
-    console.log(result);
-  }
-  catch (error) {
-    console.error(error);
-  }
-
-/*
-const response=axios.post('https://hooks.slack.com/services/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',data);
-	let dataToSend ;
-	dataToSend = `Cool Corporate Buzz Word`
-	return res.json({
-		fulfillmentText: dataToSend,
-		source: 'Hello'
-	});	
-*/
-}
-	
 
 /*** buzzword handler function ***/
 function buzzWordHandler(req, res, next) {	
@@ -114,10 +65,39 @@ function buzzWordHandler(req, res, next) {
 
 				let dataToSend ;
 				dataToSend = `Cool Corporate Buzz Word: ${msg.phrase}`
+				
+				try {	 
+				    // Call the chat.postMessage method using the built-in WebClient
+				    const result = app.client.chat.postMessage({
+				      // The token you used to initialize your app
+				      token: process.env.TOKEN,
+				      channel: 'D01F46BL5QE',	  
+					  text:'Hello world :tada:',	  
+					  //attachments:'[{"color": "#3AA3E3","attachment_type": "default","pretext": "pre-hello","text": "Cool Corporate Buzz Word...""}]'
+					  //as_user:true,
+				      attachments:'[{"color": "#3AA3E3","author_name": "Bobby Tables","author_link": "http://flickr.com/bobby/","author_icon": "http://flickr.com/icons/bobby.jpg","text": "Cool Corporate Buzz Word..."}]',
+					  //blocks:'[{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]',
+					  //icon_emoji:':chart_with_upwards_trend:'
+				      // You could also use a blocks[] array to send richer content
+				    });
+
+				    // Print result, which includes information about the message (like TS)
+				    console.log(result);
+					return res.json({});
+				  }
+				  catch (error) {
+				    return res.json({
+						fulfillmentText: 'Could not get results at this time',
+						source: 'BuzzWord'
+					})
+				  }
+				
+				/*
 				return res.json({
 					fulfillmentText: dataToSend,
 					source: 'BuzzWord'
 				})
+				*/
 			})
 		},
 		error => {
