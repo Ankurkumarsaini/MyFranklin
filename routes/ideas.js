@@ -184,6 +184,7 @@ function addNewIdeaWithName(req, res, next) {
 			fulfillmentText: 'Could not get results at this time',
 			source: 'JIRA-NewIdea'
 		})
+	  }
 
 }
 
