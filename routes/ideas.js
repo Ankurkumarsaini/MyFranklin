@@ -164,35 +164,26 @@ function mathFactsHandler(req, res, next) {
 
 /*** Jira NewIdea  Handler Functions ***/
 function addNewIdeaWithName(req, res, next) {
-	const userAccountNotification = {
-		  'username': 'Error notifier', // This will appear as user name who posts the message
-		  'text': 'User failed to login 3 times. Account locked for 15 minutes.', // text
-		  'icon_emoji': ':bangbang:', // User icon, you can also use custom icons here
-		  'attachments': [{ // this defines the attachment block, allows for better layout usage
-		    'color': '#eed140', // color of the attachments sidebar.
-		    'fields': [ // actual fields
-		      {
-			'title': 'Environment', // Custom field
-			'value': 'Production', // Custom value
-			'short': true // long fields will be full width
-		      },
-		      {
-			'title': 'User ID',
-			'value': '331',
-			'short': true
-		      }
-		    ]
-		  }]
-		};
-	const yourWebHookURL='https://hooks.slack.com/services/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';
+	try {	 
+	   // Call the chat.postMessage method using the built-in WebClient
+	    const result = app.client.chat.postMessage({
+	      // The token you used to initialize your app
+	      token: process.env.TOKEN,
+	      channel: 'D01F46BL5QE',	  
+		  text:'Note: Idea has changed...',	  		 
+		  attachments:'[{"color": "#3AA3E3","text":"Idea has been replaced with a slash command and is accessable by typing\n/idea"}]',
+		 
+	    });
 
-	console.log('Sending slack message');
-  try {
-    const slackResponse = sendSlackMessage(yourWebHookURL, userAccountNotification);
-    console.log('Message response', slackResponse);
-  } catch (e) {
-    console.error('There was a error with the request', e);
-  }
+	    // Print result, which includes information about the message (like TS)
+	    //console.log(result);
+		return res.json({});
+	  }
+	  catch (error) {
+	    return res.json({
+			fulfillmentText: 'Could not get results at this time',
+			source: 'JIRA-NewIdea'
+		})
 
 }
 
