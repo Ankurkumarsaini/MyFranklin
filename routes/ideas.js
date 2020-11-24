@@ -65,8 +65,7 @@ function buzzWordHandler(req, res, next) {
 
 				var dataToSend ;
 				dataToSend = `Cool Corporate Buzz Word: ${msg.phrase}`
-				
-				try {	 
+				 
 				    // Call the chat.postMessage method using the built-in WebClient
 				    const result = app.client.chat.postMessage({
 				      // The token you used to initialize your app
@@ -75,7 +74,7 @@ function buzzWordHandler(req, res, next) {
 					  text:'Hello world :tada:',	  
 					  //attachments:'[{"color": "#3AA3E3","attachment_type": "default","pretext": "pre-hello","text": "Cool Corporate Buzz Word...""}]'
 					  //as_user:true,
-				          attachments:'[{"color": "#3AA3E3","author_name": "Bobby Tables","author_link": "http://flickr.com/bobby/","author_icon": "http://flickr.com/icons/bobby.jpg","text": dataToSend}]',
+				          attachments:'[{"color": "#3AA3E3","author_name": "Bobby Tables","author_link": "http://flickr.com/bobby/","author_icon": "http://flickr.com/icons/bobby.jpg","text":`Cool Corporate Buzz Word: ${msg.phrase}`}]',
 					  //blocks:'[{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]',
 					  //icon_emoji:':chart_with_upwards_trend:'
 				      // You could also use a blocks[] array to send richer content
@@ -84,13 +83,7 @@ function buzzWordHandler(req, res, next) {
 				    // Print result, which includes information about the message (like TS)
 				    console.log(result);
 					return res.json({});
-				  }
-				  catch (error) {
-				    return res.json({
-						fulfillmentText: 'Could not get results at this time',
-						source: 'BuzzWord'
-					})
-				  }
+				 
 				
 				/*
 				return res.json({
