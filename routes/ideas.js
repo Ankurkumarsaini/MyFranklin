@@ -171,7 +171,8 @@ function addNewIdeaWithName(req, res, next) {
 	      token: process.env.TOKEN,
 	      channel: 'D01F46BL5QE',	  
 		  text:'Note: Idea has changed...',	  		 
-		  attachments:'[{"color": "#3AA3E3","text":"Idea has been replaced with a slash command and is accessable by typing\n/idea"}]',
+		  attachments:'[{"color": "#3AA3E3","text":"Idea has been replaced with a slash command and is accessable by typing\n/idea","fallback": "Idea has been replaced with a slash command and is accessable by typing\n/idea"}]',
+		 // blocks:'[{"fallback": "Idea has been replaced with a slash command and is accessable by typing\n/idea"}]',  
 		 
 	    });
 
