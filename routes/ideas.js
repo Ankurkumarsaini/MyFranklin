@@ -52,6 +52,10 @@ router.post('/', function (req, res, next) {
 	    case "PExcuses":
                 // speeding excuses
                 speedingExcuseHandler(req, res, next);
+                break;
+	    case "Excuses":
+                // Why I can't go to work... more excuses
+                excuseHandler(req, res, next);
                 break;		
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
@@ -67,8 +71,120 @@ router.post('/', function (req, res, next) {
     }
 });
 
-/**** speeding execuses Handler Function ***/
+/***  Excuses Handler Function ***/
 
+function excuseHandler(req, res, next){
+	var excuses = ["I won't be coming to work today because I'm going to take a nap!",
+        "I won't be coming to work today because I am on a quest for the Holy Grail.",
+        "I won't be coming to work today because I'm too sexy for this job... Along with other items like my shirt... Pants... You.",
+        "I won't be coming to work today because I forgot how to get there.",
+        "I won't be coming to work today because someone stole my heart.",
+        "I won't be coming to work today because my llamas body is missing.",
+        "I won't be coming to work today because I took one too many Viagra.",
+        "I won't be coming to work today because I love Brenden Fraiser.",
+        "I won't be coming to work today because my car payment, house payment, and boyfriend are three months overdue.",
+        "I won't be coming to work today because I will be saving the Earth from Global warming... meaning I am not driving.",
+        "I won't be coming to work today because I can't believe it's not butter.",
+        "I won't be coming to work today because my vacuum ate my keys.",
+        "I won't be coming to work today because my cat has a gun and is holding me hostage..",
+        "I won't be coming to work today because my tootsy-rolls didn't arrive.",
+        "I won't be coming to work today because I just don't care.",
+        "I won't be coming to work today because I'm going out, since I'm gonna get what I want.",
+        "I won't be coming to work today because my father is sick and the doctors say he might not make it.",
+        "I won't be coming to work today because I have to give away kittens. Want one?",
+        "I won't be coming to work today because a rhino just impaled my car.",
+        "I won't be coming to work today because my hair is still wet!",
+        "I won't be coming to work today because the llamas are attacking my house!",
+        "I won't be coming to work today because your not delicious.",
+        "I won't be coming to work today because I forgot that there was work today.",
+        "I won't be coming to work today because in an attempt to kill a fly I drove into a telephone pole.",
+        "I won't be coming to work today because my dog ate my car keys and we're hitch hiking to the vet.",
+        "I won't be coming to work today because I have mad cow disease.",
+        "I won't be coming to work today because my dog has to go to the bathroom.",
+        "I won't be coming to work today because my spidey-sences are tingling and they're telling me not to come into work now or I'll be in trouble.",
+        "I won't be coming to work today because the llamas are attacking my house!",
+        "I won't be coming to work today because the carpool host was being creepy.",
+        "I won't be coming to work today because my dog jumped to the moon and I had to get him.",
+        "I won't be coming to work today because my heart is beating abnormally.",
+        "I won't be coming to work today because I had a near death experience and thought I died.",
+        "I won't be coming to work today because I don't have to since my understudy decided she likes going to it more than me.",
+        "I won't be coming to work today because my boyfriend hit me over the head with a speaker and I'm kind of messed up.",
+        "I won't be coming to work today because the voices told me to clean all the guns today.",
+        "I won't be coming to work today because I'm taking your parents to school day.",
+        "I won't be coming to work today because my puppy died from eating a un-blown balloon.",
+        "I won't be coming to work today because I melt in the sun.",
+        "I won't be coming to work today because I had to save the world from a giant piece of lint. It was a fierce and dirty battle but I truimphed over the scum lint ball with the vacuum of JUSTICE!!!",
+        "I won't be coming to work today because my brother is sick and the doctors say he might not make it.",
+        "I won't be coming to work today because I'm busy doing fun things in the elevator.",
+        "I won't be coming to work today because a tree fell on my car.",
+        "I won't be coming to work today because my mind works like lightning, one brilliant flash and it's gone.",
+        "I won't be coming to work today because I'm stuck in jail.",
+        "I won't be coming to work today because my mother is sick and the doctors say she might not make it.",
+        "I won't be coming to work today because I'm slaying vampires.",
+        "I won't be coming to work today because I'm all stressed out and I don't want to have someone to choke.",
+        "I won't be coming to work today because I have to learn an interpretive dance number by noon.",
+        "I won't be coming to work today because my fortune cookie said not to.",
+        "I won't be coming to work today because my horoscope says avoid heavy loads.",
+        "I won't be coming to work today because Dr. Phil said not to, he said it was the best for me and my family.",
+        "I won't be coming to work today because I've got a horrible Herpes breakout. I'm sorry, it should be better by tomorrow.",
+        "I won't be coming to work today because a pedestrian hit me and went under my car.",
+        "I won't be coming to work today because I was having heat flashes.",
+        "I won't be coming to work today because I'm doing a Stress Level Elimination Exercise Plan (sleep).",
+        "I won't be coming to work today because it seems someone stole my car last night.",
+        "I won't be coming to work today because I'm turning into the devil.",
+        "I won't be coming to work today because I'm getting older, but not wiser.",
+        "I won't be coming to work today because I'm too busy burning the office down.",
+        "I won't be coming to work today because I stayed up all night dealing with a problem.",
+        "I won't be coming to work today because I woke up to the soothing sound of water and remembered that I just bought a waterbed.",
+        "I won't be coming to work today because I'm too young for work!",
+        "I won't be coming to work today because I had to make myself a sandwich.",
+        "I won't be coming to work today because I tripped over a lady bug.",
+        "I won't be coming to work today because I was driving in my car until I got into an accident with another car so im a ghost now and im gonna go haunt the man that smashed my car.",
+        "I won't be coming to work today because I was told I lost my mind, so I have to go find it.",
+        "I won't be coming to work today because I have diarrhea and its very intoxicating.",
+        "I won't be coming to work today because I played leap frog with a unicorn.",
+        "I won't be coming to work today because constipation has made me a walking time bomb.",
+        "I won't be coming to work today because a swarm of crabs is blocking my way out the door.",
+        "I won't be coming to work today because I'm in a coma right now.",
+        "I won't be coming to work today because I just found out I'm the Holder of the End, and I can't let the objects come together.",
+        "I won't be coming to work today because I don't have to since my understudy decided she likes going to it more than me.",
+        "I won't be coming to work today because my house is flooded and I need to be there when the plumber comes.",
+        "I won't be coming to work today because I fell down and I can't seem to get back up.",
+        "I won't be coming to work today because I was kidnapped by ninjas.",
+        "I won't be coming to work today because I have an attitude and I will use it on you if I do go.",
+        "I won't be coming to work today because it's a sunday.",
+        "I won't be coming to work today because I have really bad gas and I don't want everyone else to suffer.",
+        "I won't be coming to work today because they forgot to sterilize the needle before the lethal injection.",
+        "I won't be coming to work today because my next mood swing is in six minutes.",
+        "I won't be coming to work today because it's raining cats and dogs!",
+        "I won't be coming to work today because I just found out I'm no longer alive.",
+        "I won't be coming to work today because I have just four minutes to save the world. ",
+        "I won't be coming to work today because I am too busy becoming a lesbian and practicing witchcraft. Oh wait..thats my excuse for not going to church.",
+        "I won't be coming to work today because I just bought halo 3 so bug off."
+    ];
+    var excuseIndex = Math.random() * (86 - 0) + 0;
+    var index = Math.round(excuseIndex);
+	
+	try{
+	const result = app.client.chat.postMessage({
+				      // The token you used to initialize your app
+				      token: process.env.TOKEN,
+				      channel: 'D01F46BL5QE',	  
+				      text:'Excuses for not going to work ...',					  
+				      attachments:'[{"color": "#3AA3E3","text":"'+ excuses[index] +'"}]',					  
+				    });
+		console.log(result);
+					
+	 }catch (error) {
+	    return res.json({
+			fulfillmentText: 'Could not get results at this time',
+			source: 'Excuses'
+		})
+	  }
+	
+}
+
+/**** speeding execuses Handler Function ***/
 function speedingExcuseHandler(req, res, next){
 	var pExcuses = ["I'm sorry officer. I know I was speeding but I thought you wanted to race.",
         "I'm sorry officer. I know I was speeding but I need to get my kid to the hospital. His nose implants are acting up and it wouldn't be good if my husband saw him like this. Then he would know that he isn't his son. Now, we don't want that to happen do we?",
