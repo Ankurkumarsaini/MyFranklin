@@ -56,6 +56,10 @@ router.post('/', function (req, res, next) {
 	    case "Excuses":
                 // Why I can't go to work... more excuses
                 excuseHandler(req, res, next);
+                break;	
+	    case "Poem":
+                // random poem
+                poemHandler(req, res, next);
                 break;		
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
@@ -71,6 +75,47 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/*** Poem Handler Function ***/
+function poemHandler(req,res,next){
+
+ var options = {
+        uri: 'https://www.poemist.com/api/v1/randompoems',
+        method: 'GET',
+        json: true,
+        headers: {
+            "Accept": "application/json"
+        }
+    };
+	
+     return rp(options)
+        .then(result => {
+            var returnPoem = '';
+
+            for (var i = 0; i < result.length; i++) {
+                returnPoem = '*TITLE* ' + result[i].title + '\n' + '*POEM* \n' + result[i].content + '\n\n';
+            }
+	     
+	     try{
+	        const result = app.client.chat.postMessage({
+		    token: process.env.TOKEN,
+		    channel: 'D01F46BL5QE',
+		    text: "Random Poem ...",
+		    attachments:'[{"color": "#3AA3E3","attachment_type": "default","text":"'+ returnPoem +'"}]',			
+		});
+	     }catch (error) {
+	    return res.json({
+		fulfillmentText: 'Could not get results at this time',
+		source: 'Poem'
+		})
+	  }   
+       })
+        .catch(function (err) {
+            //logError(err, req.body.originalDetectIntentRequest.payload.data.event.user, 'Poem', 'poemHandler');
+            console.log(err);
+        });
+	
+
+}
 /***  Excuses Handler Function ***/
 
 function excuseHandler(req, res, next){
