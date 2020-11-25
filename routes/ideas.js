@@ -34,6 +34,9 @@ router.post('/', function (req, res, next) {
                 break;
 	     case "Help":                
                 helpHandler(req, res, next);
+                break;
+	    case "orderCafeteria":
+                orderCafeteriaHandler(req, res, next);
                 break;		
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
@@ -48,6 +51,31 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/**** orderCafeteriaHandler handler function ***/
+function orderCafeteriaHandler(req,res,next){	
+	try {	 
+	   // Call the chat.postMessage method using the built-in WebClient
+	    const result = app.client.chat.postMessage({
+	      // The token you used to initialize your app
+	      token: process.env.TOKEN,
+	      channel: 'D01F46BL5QE',	  
+		  text:'',	  		 
+		  attachments:'[{"color": "#f2c744","blocks":[{"type": "section","text": {"type": "mrkdwn","text": "*Order Food Online from the Rio 2 Cafeteria*"}},{"type": "actions","elements": [{"type": "button","text": {"type": "plain_text","emoji": true,"text": "Order Food"},"url": "https://orders.freedomfinancialcafe.com","style": "primary","value": "click_do_nothing"}]}]}]', 
+	    });
+
+	    // Print result, which includes information about the message (like TS)
+	    //console.log(result);
+		return res.json({});
+	  }
+	  catch (error) {
+	    return res.json({
+			fulfillmentText: 'Could not get results at this time',
+			source: 'JIRA-NewIdea'
+		})
+	  }
+}
 
 /*** buzzword handler function ***/
 function buzzWordHandler(req, res, next) {	
