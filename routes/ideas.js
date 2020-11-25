@@ -49,6 +49,10 @@ router.post('/', function (req, res, next) {
                 // random lawyer joke
                 lawyerJokesHandler(req, res, next);
                 break;
+	    case "PExcuses":
+                // speeding excuses
+                speedingExcuseHandler(req, res, next);
+                break;		
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
                 break;
@@ -63,6 +67,60 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/**** speeding execuses Handler Function ***/
+
+function speedingExcuseHandler(req, res, next){
+	var pExcuses = ["I'm sorry officer. I know I was speeding but I thought you wanted to race.",
+        "I'm sorry officer. I know I was speeding but I need to get my kid to the hospital. His nose implants are acting up and it wouldn't be good if my husband saw him like this. Then he would know that he isn't his son. Now, we don't want that to happen do we?",
+        "I'm sorry officer. I know I was speeding but I just couldn't believe it wasn't butter. I just HAVE to see for my self.",
+        "I'm sorry officer. I know I was speeding but to be honest, I don't think you were going the speed limit either.",
+        "I'm sorry officer. I know I was speeding but I stole this car.",
+        "I'm sorry officer. I know I was speeding but I thought you had to be in relatively good physical shape to be a police officer.",
+        "I'm sorry officer. I know I was speeding but how can I convince you otherwise?",
+        "I'm sorry officer. I know I was speeding but I know you were waiting for me so I got here as fast as I could!",
+        "I'm sorry officer. I know I was speeding but I am stunt driver and we are filming a movie!",
+        "I'm sorry officer. I know I was speeding but take some money. How about you go get yourself something nice.",
+        "I'm sorry officer. I know I was speeding but you see, I spotted you coming and knew if you caught up you'd see I was drinking. So I had to speed to try and out run you.",
+        "I'm sorry officer. I know I was speeding but I'm being stalked by 3 FBI cars and I'm trying to run away!",
+        "I'm sorry officer. I know I was speeding but I'VE SEEN YOU BEFORE! Aren't you in The Village People?",
+        "I'm sorry officer. I know I was speeding but I didn't want to be late for church.",
+        "I'm sorry officer. I know I was speeding but I was going cuckoo for Coco puffs!",
+        "I'm sorry officer. I know I was speeding but I'm a pregnant man!",
+        "I'm sorry officer. I know I was speeding but there was a giant anaconda chasing me!",
+        "I'm sorry officer. I know I was speeding but OH MY, aren't you a sexy officer?",
+        "'m sorry officer. I know I was speeding but all the signs say 81! Apparently that was the route number...",
+        "I'm sorry officer. I know I was speeding but my doctor gave me the wrong meds.",
+        "I'm sorry officer. I know I was speeding but I get 10 extra in the fast lane.",
+        "I'm sorry officer. I know I was speeding but my accident-prone fiance is home alone.",
+        "I'm sorry officer. I know I was speeding but I ran out of lip gloss!",
+        "I'm sorry officer. I know I was speeding but I had passed out after seeing flashing lights which I believed to be UFOs in the distance. The flash of the camera brought me round from my trance.",
+        "I'm sorry officer. I know I was speeding but I have to get home in time for Ugly Betty!",
+        "I'm sorry officer. I know I was speeding but WOW, officer, is that a V8? She looks nice, bets she goes and handles well, mind if take a look, please?",
+        "I'm sorry officer. I know I was speeding but the limit was not clearly posted.",
+        "I'm sorry officer. I know I was speeding but I am color blind and I thought that the speeding sign was the blue one!",
+        "I'm sorry officer. I know I was speeding but I have to get ice cream before the store closes!",
+        "I'm sorry officer. I know I was speeding but I have to get home quickly I left the stove on!",
+        "I'm sorry officer. I know I was speeding but I had a piece of jerky fall under the gas petal and I was trying to get it with my foot."
+    ];
+    var pIndex = Math.random() * (30 - 0) + 0;
+    var index = Math.round(pIndex);
+    try{
+	const result = app.client.chat.postMessage({
+				      // The token you used to initialize your app
+				      token: process.env.TOKEN,
+				      channel: 'D01F46BL5QE',	  
+				      text:'Excuses for speeding...',					  
+				      attachments:'[{"color": "#3AA3E3","text":"'+ pExcuses[index] +'"}]',					  
+				    });
+		console.log(result);
+					
+	 }catch (error) {
+	    return res.json({
+			fulfillmentText: 'Could not get results at this time',
+			source: 'PExcuses'
+		})
+	  }
+}
 
 /**** Lawyer Joke Handler Function ***/
 function lawyerJokesHandler(req,res,next){
