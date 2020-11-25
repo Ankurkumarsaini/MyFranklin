@@ -84,7 +84,7 @@ https.get(
 				      channel: 'D01F46BL5QE',	  
 					  //text:'Hello world :tada:',
 					    text:'Information Technology Joke',					  
-				            attachments:'[{"color":"#3AA3E3","text":"'+ msg +'"}]',					 
+				            attachments:'[{"color":"#3AA3E3","text":"'+ msg.phrase +'"}]',					 
 				    });
 
 				    // Print result, which includes information about the message (like TS)
