@@ -37,7 +37,11 @@ router.post('/', function (req, res, next) {
                 break;
 	    case "orderCafeteria":
                 orderCafeteriaHandler(req, res, next);
-                break;		
+                break;	
+	    case "IncidentMgt":
+                // Returns incident management info
+                incidentMgtHandler(req, res, next);
+                break;
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
                 break;
@@ -51,6 +55,32 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/****  Incident Management Handler Function ***/
+function incidentMgtHandler(req,res,next){	
+	try {	 
+	   // Call the chat.postMessage method using the built-in WebClient
+	    const result = app.client.chat.postMessage({
+	      // The token you used to initialize your app
+	      token: process.env.TOKEN,
+	      channel: 'D01F46BL5QE',	  
+	      text:'Incident Management (IM)',	  		 
+	      attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Incident Management Resources from ServiceNow below ..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Outage Email"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article_view&sys_kb_id=3f87de47dbdef240a035f97e0f9619d5","style":"primary"},{"type":"button","text":{"type":"plain_text","text":"Run an Outage"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article&sys_id=9ec9d821db7dd7007deefb5aaf961944","style":"primary"},{"type":"button","text":{"type":"plain_text","text":"IM"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article&sys_id=5b256931dbcaa3c0c4c9f06e0f9619fd","style":"primary"}]}]}]', 
+	    });
+
+	    // Print result, which includes information about the message (like TS)
+	    //console.log(result);
+		return res.json({});
+	  }
+	  catch (error) {
+	    return res.json({
+			fulfillmentText: 'Could not get results at this time',
+			source: 'IncidentMgt'
+		})
+	  }
+	
+}
 
 
 /**** orderCafeteriaHandler handler function ***/
