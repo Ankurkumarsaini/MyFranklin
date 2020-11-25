@@ -65,7 +65,7 @@ router.post('/', function (req, res, next) {
 
 
 /**** Lawyer Joke Handler Function ***/
-function lawyerjoke(req,res,next){
+function lawyerJokesHandler(req,res,next){
 	    var lJokes = [
         "Q: What do you call a smiling, courteous person at a bar association convention?\nA: The caterer.",
         "Q: What's the difference between a female lawyer and a pitbull?\nA: Lipstick.",
