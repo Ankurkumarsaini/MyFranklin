@@ -42,6 +42,9 @@ router.post('/', function (req, res, next) {
                 // Returns incident management info
                 incidentMgtHandler(req, res, next);
                 break;
+	    case "J2":
+                joke2Handler(req, res, next);
+                break;		
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
                 break;
@@ -55,6 +58,50 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/*** Joke2Handler Handler Function ***/
+function  joke2Handler(req,res,next){
+https.get(
+		'https://corporatebs-generator.sameerkumar.website/',
+		responseFromAPI => {
+			let completeResponse = ''
+			responseFromAPI.on('data', chunk => {
+				completeResponse += chunk
+			})
+			responseFromAPI.on('end', () => {
+				
+				console.log(completeResponse);
+				
+				//const mymath = JSON.parse(completeResponse.text);
+				
+				const msg = JSON.parse(completeResponse);			
+				 
+				    // Call the chat.postMessage method using the built-in WebClient
+				    const result = app.client.chat.postMessage({
+				      // The token you used to initialize your app
+				      token: process.env.TOKEN,
+				      channel: 'D01F46BL5QE',	  
+					  //text:'Hello world :tada:',
+					    text:'Information Technology Joke',					  
+				            attachments:'[{"color":"#3AA3E3","blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Information Technology Joke: Chuck Norris can solve the Towers of Hanoi in one move. "}}]}]""[{"color":"#3AA3E3","blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Information Technology Joke: "'+ msg +'"}}]}]',
+					 
+				    });
+
+				    // Print result, which includes information about the message (like TS)
+				    console.log(result);
+				    return res.json({});
+				
+			})
+		},
+		error => {
+			return res.json({
+				fulfillmentText: 'Could not get results at this time',
+				source: 'Joke2Handler'
+			})
+		}
+	)
+}
 
 
 /****  Incident Management Handler Function ***/
