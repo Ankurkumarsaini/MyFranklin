@@ -78,7 +78,10 @@ router.post('/', function (req, res, next) {
                 break;	
 	     case "GenesysSalesforce":
                 genesysSalesforceHandler(req, res, next);
-                break;		
+                break;	
+	    case "HowFranklinWorks":
+                howFranklinWorksHandler(req, res, next);
+                break;	 	
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -90,6 +93,26 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/*** how franklin works handler function ***/
+function howFranklinWorksHandler(req, res, next){
+
+try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "*Franklin - (How Franklin Works) Diagram*",
+		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Franklin is a Slack chatbot created by FFN."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Dataflow Diagram"},"url":"https://www.lucidchart.com/documents/view/a6565a46-8e2e-4516-98dd-d77b1e9f47af","style":"primary"}]}]}]',
+
+		});
+			console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'howFranklinWorksHandler'
+	})
+  } 
+
+}
 
 /*** salesforce handler function ***/ 
 function genesysSalesforceHandler(req,res,next){
