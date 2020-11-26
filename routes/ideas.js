@@ -105,7 +105,7 @@ function networkStateHandler(req,res,next){
 		token: process.env.TOKEN,
 		channel: 'D01F46BL5QE',
 		text: "*CCP Network Map*",
-		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Used to monitor basic up/down status as well as active production alarms."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View CCP Network Monitor"},"url":"https://www.lucidchart.com/documents/view/a6565a46-8e2e-4516-98dd-d77b1e9f47af","style":"primary"}]}]}]',
+		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Used to monitor basic up/down status as well as active production alarms."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View CCP Network Monitor"},"url":"https://prtg.freedomdebtrelief.com/public/mapshow.htm?id=19964&mapid=ccp-noc","style":"primary"}]}]}]',
 
 		});
 	console.log(result);
