@@ -76,6 +76,9 @@ router.post('/', function (req, res, next) {
 	     case "gchart":
                 gchartHandler(req, res, next);
                 break;	
+	     case "GenesysSalesforce":
+                genesysSalesforceHandler(req, res, next);
+                break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -86,6 +89,27 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/*** salesforce handler function ***/ 
+function genesysSalesforceHandler(req,res,next){
+      try{
+			const result = app.client.chat.postMessage({
+			token: process.env.TOKEN,
+			channel: 'D01F46BL5QE',
+			text: "*Genesys Salesforce Dataflow Diagram*",
+		        attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Dataflow diagram for Salesforce updates required for the \'debt settlment builder\'."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Dataflow Diagram"},"url":"https://www.lucidchart.com/documents/view/8e338621-9101-4f9a-bb17-8ab61d44e73b","style":"primary"}]}]}]',
+			
+			});
+				console.log(result);
+	    }catch (error) {
+	    return res.json({
+		fulfillmentText: 'Could not get results at this time',
+		source: 'genesysSalesforceHandler'
+		})
+	  } 
+
+}
 
 /*** gchart Handler function ***/
 function gchartHandler(req,res,next){
