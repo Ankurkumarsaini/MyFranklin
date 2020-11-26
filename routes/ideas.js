@@ -91,6 +91,9 @@ router.post('/', function (req, res, next) {
 	    case "roomLocation":
                 roomLocationHandler(req, res, next);
                 break;		
+	   case "Sacremento":
+                sacramentoHandler(req, res, next);
+                break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -101,6 +104,25 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+/** Sacremento Handler Function ***/
+ function sacramentoHandler(req, res, next){
+ try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "Escalation Plan",
+		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"The escalation plan for IT urgent todo items."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Escalation in JIRA"},"url":"https://billsdev.atlassian.net/browse/PLAN-279","style":"primary"}]}]}]',
+
+		});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'sacramentoHandler'
+	})
+  } 
+ }
 
 /*** Room Location Handler function ****/
 function roomLocationHandler(req,res,next){
