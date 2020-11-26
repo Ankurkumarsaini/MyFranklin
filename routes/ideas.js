@@ -72,7 +72,10 @@ router.post('/', function (req, res, next) {
                 break;
 	     case "gant":
                 gantHandler(req, res, next);
-                break;		
+                break;
+	     case "gchart":
+                gchartHandler(req, res, next);
+                break;	
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -84,6 +87,28 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/*** gchart Handler function ***/
+function gchartHandler(req,res,next){
+
+try{
+	const result = app.client.chat.postMessage({
+			token: process.env.TOKEN,
+			channel: 'D01F46BL5QE',
+			text: "A Google pie diagram example.",
+		        attachments:'[{"blocks":[{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Pie Diagram"},"url":"https://storage.googleapis.com/ffn-images/img/gpie.html","style":"primary"}]}]}]',
+		});
+	
+	console.log(result);
+	
+ }catch (error) {
+	    return res.json({
+		fulfillmentText: 'Could not get results at this time',
+		source: 'gchart'
+		})
+	  }
+
+
+}
 
 /**** gant handler function ***/
 function gantHandler(req, res, next){
