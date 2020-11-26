@@ -84,6 +84,9 @@ router.post('/', function (req, res, next) {
                 break;
 	    case "NetworkState":
                 networkStateHandler(req, res, next);
+                break;
+	    case "okta":
+                oktaHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -95,6 +98,28 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/***  okta Handler function ***/
+ function oktaHandler(req,res,next){
+	 
+ try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "*OKTA*",
+		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"(View link, use the right arrow to view pages.)"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View OKTA Data"},"url":"https://freedomfinancialnetwork.domo.com/link/IRQqVTpIo8ZvVzEl","style":"primary"}]}]}]',
+
+		});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'oktaHandler'
+	})
+  } 
+ 
+ }
 
 
 /*** Network State Handler Function ***/
