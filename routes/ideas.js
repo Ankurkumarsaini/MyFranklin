@@ -70,6 +70,9 @@ router.post('/', function (req, res, next) {
 	    case "changemgt":
                 changeMgtHandler(req, res, next);
                 break;
+	     case "gant":
+                gantHandler(req, res, next);
+                break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -81,8 +84,29 @@ router.post('/', function (req, res, next) {
     }
 });
 
-/***  Change Management Handler ***/
 
+/**** gant handler function ***/
+function gantHandler(req, res, next){
+	
+	try{
+	     const result = app.client.chat.postMessage({
+			token: process.env.TOKEN,
+			channel: 'D01F46BL5QE',
+			text: "A Google gantt chart example.",
+		        attachments:'[{"blocks":[{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Gantt Chart"},"url":"https://storage.googleapis.com/ffn-images/img/ggant.html","style":"primary"}]}]}]',
+		});
+	    
+		console.log(result);
+	    }catch (error) {
+	    return res.json({
+		fulfillmentText: 'Could not get results at this time',
+		source: 'gant'
+		})
+	  }  
+
+}
+
+/***  Change Management Handler ***/
 function changeMgtHandler(req,res,next){     
 
 	try{
