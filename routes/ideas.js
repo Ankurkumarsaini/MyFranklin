@@ -87,6 +87,9 @@ router.post('/', function (req, res, next) {
                 break;
 	    case "okta":
                 oktaHandler(req, res, next);
+                break;
+	    case "roomLocation":
+                roomLocationHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -99,6 +102,25 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/*** Room Location Handler function ****/
+function roomLocationHandler(req,res,next){
+  
+try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "Can you ask \'Alfred\' where rooms are? You will get a map to the conference room. Thank you!",
+		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Room Search Request"}}]}]',
+
+		});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'roomLocationHandler'
+	})
+  } 
+}
 
 /***  okta Handler function ***/
  function oktaHandler(req,res,next){
