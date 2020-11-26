@@ -67,6 +67,9 @@ router.post('/', function (req, res, next) {
 	    case "MathFacts":
                 mathFactsHandler(req, res, next);
                 break;
+	    case "changemgt":
+                changeMgtHandler(req, res, next);
+                break;
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -77,6 +80,31 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+/***  Change Management Handler ***/
+
+function changeMgtHandler(req,res,next){     
+
+	try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "Change Management Diagram",
+		attachments:'[{"blocks":[{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Diagram"},"url":"https://www.lucidchart.com/documents/view/bb0c456b-e210-41e4-9ac0-fc93b901a9fa/0","style":"primary"}]}]}]'
+		});
+		
+		console.log(result);
+	    
+	}catch (error) {
+	    return res.json({
+		fulfillmentText: 'Could not get results at this time',
+		source: 'changemgt'
+		})
+	  }  
+
+}
+
+
 
 /*** my Test Handler Function ***/
 function mytestHandler(req, res, next){
