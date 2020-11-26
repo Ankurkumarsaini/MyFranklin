@@ -285,7 +285,9 @@ function gantHandler(req, res, next){
 			token: process.env.TOKEN,
 			channel: 'D01F46BL5QE',
 			text: "A Google gantt chart example.",
-		        attachments:'[{"blocks":[{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Gantt Chart"},"url":"https://storage.googleapis.com/ffn-images/img/ggant.html","style":"primary"}]}]}]',
+		        attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"A Google gantt chart example."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Gantt Chart"},"url":"https://storage.googleapis.com/ffn-images/img/ggant.html","style":"primary"}]}]}]',
+			
+		       // attachments:'[{"blocks":[{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Gantt Chart"},"url":"https://storage.googleapis.com/ffn-images/img/ggant.html","style":"primary"}]}]}]',
 		});
 	    
 		console.log(result);
