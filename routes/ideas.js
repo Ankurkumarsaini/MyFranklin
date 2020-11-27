@@ -120,6 +120,9 @@ router.post('/', function (req, res, next) {
                 break;	
 	 case "managerReport":
                 managerReportHandler(req, res, next);
+                break;
+	 case "taskManager":
+                taskManagerHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -132,16 +135,32 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/*** Task Manager Handler Function ***/
+function taskManagerHandler(req, res, next){
+try{
+	const result = app.client.chat.postMessage({
+	token: process.env.TOKEN,
+	channel: 'D01F46BL5QE',
+	text: "",
+	attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"*Daily Task Manager*\nUse to manage my daily tasks."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Add New Task","emoji":true},"style":"primary","value":"todo_add_new_task"},{"type":"button","text":{"type":"plain_text","text":"View Incomplete Tasks","emoji":true},"style":"primary","value":"todo_view_incompleted_tasks"},{"type":"button","text":{"type":"plain_text","text":"View Completed Tasks","emoji":true},"style":"primary","value":"todo_view_completed_tasks"},{"type":"button","text":{"type":"plain_text","text":"View Tasks Due Today","emoji":true},"style":"primary","value":"todo_tasks_due_today"},{"type":"button","text":{"type":"plain_text","text":"View Tasks Due This Week","emoji":true},"style":"primary","value":"todo_weekly_tasks"}]}]}]',
+	});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'taskManagerHandler'
+	})
+  }
+}
+
 /*** manager Report Handler function ***/
 function managerReportHandler(req, res, next){
-
  try{
 	const result = app.client.chat.postMessage({
 	token: process.env.TOKEN,
 	channel: 'D01F46BL5QE',
 	text: "",
 	attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"*CREATE TEAM REPORT*\nBy date range by team member"}},{"type":"section","text":{"type":"mrkdwn","text":"Pick team member from list"},"accessory":{"type":"multi_static_select","placeholder":{"type":"plain_text","text":"Select a member","emoji":true},"options":[{"text":{"type":"plain_text","text":"Glenn","emoji":true},"value":"value-0"},{"text":{"type":"plain_text","text":"Jay","emoji":true},"value":"value-1"},{"text":{"type":"plain_text","text":"Robbie","emoji":true},"value":"value-2"},{"text":{"type":"plain_text","text":"Georgina","emoji":true},"value":"value-3"}]}},{"type":"section","text":{"type":"mrkdwn","text":"Pick a start date."},"accessory":{"type":"datepicker","initial_date":"2019-10-03","placeholder":{"type":"plain_text","text":"Select a date","emoji":true}}},{"type":"section","text":{"type":"mrkdwn","text":"Pick an end date."},"accessory":{"type":"datepicker","initial_date":"2019-10-04","placeholder":{"type":"plain_text","text":"Select a date","emoji":true}}},{"type":"section","text":{"type":"mrkdwn","text":"Pick a report template."},"accessory":{"type":"static_select","placeholder":{"type":"plain_text","text":"Select a report","emoji":true},"options":[{"text":{"type":"plain_text","text":"Productivity","emoji":true},"value":"value-0"},{"text":{"type":"plain_text","text":"View closed items","emoji":true},"value":"value-1"},{"text":{"type":"plain_text","text":"View open items","emoji":true},"value":"value-2"},{"text":{"type":"plain_text","text":"Calculate Bonuses","emoji":true},"value":"value-3"},{"text":{"type":"plain_text","text":"FTE Estimate to Execute Plan","emoji":true},"value":"value-4"},{"text":{"type":"plain_text","text":"Distribute Unasigned Work (AI)","emoji":true},"value":"value-5"},{"text":{"type":"plain_text","text":"Leaderboard","emoji":true},"value":"value-6"}]}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","emoji":true,"text":"VIEW REPORT"},"style":"primary","value":"click_view_mgr_report"},{"type":"button","text":{"type":"plain_text","emoji":true,"text":"CANCEL"},"style":"danger","value":"click_do_nothing"}]}]}]',
-			
 	});
 	console.log(result);
     }catch (error) {
@@ -150,8 +169,6 @@ function managerReportHandler(req, res, next){
 	source: 'managerReportHandler'
 	})
   }
-
-
 }
 
 /*** franklinStatistics handler function ***/
