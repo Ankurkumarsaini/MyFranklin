@@ -125,8 +125,7 @@ router.post('/', function (req, res, next) {
                 taskManagerHandler(req, res, next);
                 break;	
 	 case "actionExample":
-                actionExampleHandler(req, res, next){
-		};
+                actionExampleHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
