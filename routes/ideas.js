@@ -106,6 +106,9 @@ router.post('/', function (req, res, next) {
 	   case "UnclearedPaymentsProcess":
                 unclearedPmtsProcessHandler(req, res, next);
                 break;
+	   case "brightIdea":
+                brightIdeaHandler(req, res, next);
+                break;
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -117,8 +120,29 @@ router.post('/', function (req, res, next) {
     }
 });
 
-/*** Uncleared Payment Process Handler function ***/
 
+/***  Bright Idea Handler function ***/
+function brightIdeaHandler(req, res, next){
+
+ try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "",
+		 attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Brilliant Idea..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Create Idea"},"url":"https://sites.google.com/freedomdebtrelief.com/ffn-bright-ideas/home","style":"primary"}]}]}]',	
+		});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'brightIdeaHandler'
+	})
+  }
+	
+	
+}
+
+/*** Uncleared Payment Process Handler function ***/
 function unclearedPmtsProcessHandler(req, res, next){
 	
  try{
@@ -132,7 +156,7 @@ function unclearedPmtsProcessHandler(req, res, next){
     }catch (error) {
     return res.json({
 	fulfillmentText: 'Could not get results at this time',
-	source: 'tempeWeatherHandler'
+	source: 'unclearedPmtsProcessHandler'
 	})
   }
 
