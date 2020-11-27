@@ -123,6 +123,10 @@ router.post('/', function (req, res, next) {
                 break;
 	 case "taskManager":
                 taskManagerHandler(req, res, next);
+                break;	
+	 case "actionExample":
+                actionExampleHandler(req, res, next){
+		};
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -134,6 +138,26 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+/*** ActionExample Handler Function ***/
+function  actionExampleHandler(req, res, next){
+	
+ try{
+	const result = app.client.chat.postMessage({
+	token: process.env.TOKEN,
+	channel: 'D01F46BL5QE',
+	text: "",
+	attachments:'[{"blocks": [{"type": "section","text": {"type": "mrkdwn","text": "You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"}},{"type": "section","fields":[{"type": "mrkdwn", "text": "*Type:*\nComputer (laptop)"},{"type": "mrkdwn","text": "*When:*\nSubmitted Aut 10"},{"type": "mrkdwn","text": "*Last Update:*\nMar 10, 2015 (3 years, 5 months)"},{"type": "mrkdwn","text": "*Reason:*\nAll vowel keys aren\'t working."},{"type": "mrkdwn","text": "*Specs:*\n\ Cheetah Pro 15 - Fast, really fast"}]},{"type": "actions","elements":[{"type": "button","text": {"type": "plain_text","emoji": true,"text": "Approve"},"style": "primary","value": "click_me_123"},{"type": "button","text": {"type": "plain_text","emoji": true,"text": "Deny"},"style": "danger","value": "click_me_123"}]}]}]',
+	});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'actionExampleHandler'
+	})
+  }
+}
+
 
 /*** Task Manager Handler Function ***/
 function taskManagerHandler(req, res, next){
