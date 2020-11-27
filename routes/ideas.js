@@ -96,6 +96,9 @@ router.post('/', function (req, res, next) {
                 break;	
 	   case "sanmateoweather":
                 sanmateoWeatherHandler(req, res, next);
+                break;
+	   case "TempeWeather":
+                tempeWeatherHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -107,6 +110,31 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+
+/***  tempeWeatherHandler  Handler function ***/
+
+function tempeWeatherHandler(req,res,next){
+
+	 try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "*Weather in Tempe, AZ*",
+		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"View Tempe, AZ weather."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Tempe, AZ Weather"},"url":"https://weather.com/weather/today/l/USAZ0233:1:US","style":"primary"}]}]}]',
+
+		});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'tempeWeatherHandler'
+	})
+  } 
+
+}
+
 
 
 /*** sanmateoWeather Handler  function ***/
