@@ -99,6 +99,9 @@ router.post('/', function (req, res, next) {
                 break;
 	   case "TempeWeather":
                 tempeWeatherHandler(req, res, next);
+                break;
+	   case "TwilioDomoReports":
+                twilioDomoReports(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -111,12 +114,26 @@ router.post('/', function (req, res, next) {
     }
 });
 
-
+/*** Twilio Domo Report Handler Function ***/
+function twilioDomoReports(req, res, next){
+ try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "*Twilio SMS delivered today, by hour*",
+		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"(View link, use the right arrow to view pages.)"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Twilio Stats"},"url":"https://freedomfinancialnetwork.domo.com/link/EVJ5clmABStJHbAs","style":"primary"}]}]}]',
+			
+		});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'tempeWeatherHandler'
+	})
+  } }
 
 /***  tempeWeatherHandler  Handler function ***/
-
 function tempeWeatherHandler(req,res,next){
-
 	 try{
 		const result = app.client.chat.postMessage({
 		token: process.env.TOKEN,
