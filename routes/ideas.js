@@ -114,6 +114,9 @@ router.post('/', function (req, res, next) {
                 break;	
 	  case "todoTest":
                 todoTestHandler(req, res, next);
+                break;	
+	 case "franklinStatistics":
+                franklinStatsHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -127,8 +130,30 @@ router.post('/', function (req, res, next) {
 });
 
 
-/*** todo test handler function ***/
+/*** franklinStatistics handler function ***/
 
+function franklinStatsHandler(req, res, next){
+    
+  try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "",
+		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Franklin Stats ..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View My Statistics"},"url": "https://storage.googleapis.com/ffn-images/img/frankstats.html","style":"primary"}]}]}]',
+	});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'franklinStatsHandler'
+	})
+  }
+	
+	
+}
+
+
+/*** todo test handler function ***/
 function  todoTestHandler(req, res, next){
 
 	try{
