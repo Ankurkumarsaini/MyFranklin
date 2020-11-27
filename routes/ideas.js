@@ -102,7 +102,10 @@ router.post('/', function (req, res, next) {
                 break;
 	   case "TwilioDomoReports":
                 twilioDomoReports(req, res, next);
-                break;		
+                break;
+	   case "UnclearedPaymentsProcess":
+                unclearedPmtsProcessHandler(req, res, next);
+                break;
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -113,6 +116,29 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+/*** Uncleared Payment Process Handler function ***/
+
+function unclearedPmtsProcessHandler(req, res, next){
+	
+ try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "*Uncleared Payments Process Diagram*",
+		 attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Hey check out this diagram that outlines the process."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Diagram"},"url":"https://www.lucidchart.com/documents/view/206ec397-36df-475e-a186-ba3abcebc5b3","style":"primary"}]}]}]',	
+		});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'tempeWeatherHandler'
+	})
+  }
+
+}
+
+
 
 /*** Twilio Domo Report Handler Function ***/
 function twilioDomoReports(req, res, next){
