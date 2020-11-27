@@ -109,6 +109,9 @@ router.post('/', function (req, res, next) {
 	   case "brightIdea":
                 brightIdeaHandler(req, res, next);
                 break;
+	   case "fdrSalesIntake":
+                fdrSalesIntakeHandler(req, res, next);
+                break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -120,6 +123,25 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/*** fdrsales Intake handler function ***/
+function fdrSalesIntakeHandler(req, res, next){
+
+	try{
+		const result = app.client.chat.postMessage({
+		token: process.env.TOKEN,
+		channel: 'D01F46BL5QE',
+		text: "",
+		 attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"FDR Intake ..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Create Request"},"url":"https://docs.google.com/forms/d/e/1FAIpQLSc4ObcOK7a5X-CeTV0MajMHcjbNpDmf1sDIfaFtZhOYqzyj7g/viewform","style":"primary"}]}]}]',	
+		});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'fdrSalesIntakeHandler'
+	})
+  }
+
+}
 
 /***  Bright Idea Handler function ***/
 function brightIdeaHandler(req, res, next){
