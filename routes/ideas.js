@@ -150,7 +150,7 @@ function jiraSearchITProj(req, res, next){
 	token: process.env.TOKEN,
 	channel: 'D01F46BL5QE',
 	text: "IT JIRA Projects ...",
-	attachments:'[{"color": "#3AA3E3","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Processing your search for N.A ."}]}}]',
+	attachments:'[{"color": "#3AA3E3","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Processing your search for N.A ."}}]}]',
 	});
 	console.log(result);
     }catch (error) {
