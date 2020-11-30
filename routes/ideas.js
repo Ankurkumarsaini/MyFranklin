@@ -139,6 +139,9 @@ router.post('/', function (req, res, next) {
                 break;		
 	case "StockQuote":
                 stockQuoteHandler(req, res, next);
+                break;	
+	case "CalculateGrossIncome":
+                calculateGrossIncome(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -151,18 +154,112 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/*** calculate gross income handler function ***/
+
+function calculateGrossIncome(req, res, next){
+
+    var netIncomeDesired = req.body.queryResult.parameters.netIncomeSeeking;
+    var netIncomeValue = parseFloat(netIncomeDesired);
+    // lets calculate married file jointly first 
+    var netIncomeMarriedFileJoint = 0.0;
+    var netIncomeSingle = 0.0;
+    var marriedTaxes = 0.0;
+    var singleTaxes = 0.0;
+    var marriedTaxRate = 0.0;
+    var singleTaxRate = 0.0;
+
+    if (netIncomeValue > 0 && netIncomeValue <= 19051) {
+        var tempAmount = netIncomeValue / .90;
+        if (tempAmount > 19050) {
+            netIncomeMarriedFileJoint = ((netIncomeValue - 17145) / .88) + 19050;
+        } else {
+            netIncomeMarriedFileJoint = tempAmount;
+        }
+    } else if (netIncomeValue > 19051 && netIncomeValue <= 77401) {
+        netIncomeMarriedFileJoint = ((netIncomeValue - 17145) / .88) + 19050;
+    } else if (netIncomeValue > 77401 && netIncomeValue <= 165001) {
+        netIncomeMarriedFileJoint = ((netIncomeValue - 68493) / .78) + 77400;
+    } else if (netIncomeValue > 165001 && netIncomeValue <= 315001) {
+        netIncomeMarriedFileJoint = ((netIncomeValue - 136821) / .76) + 165000;
+    } else if (netIncomeValue > 315001 && netIncomeValue <= 400001) {
+        netIncomeMarriedFileJoint = ((netIncomeValue - 250821) / .68) + 315000;
+    } else if (netIncomeValue > 400001 && netIncomeValue <= 600001) {
+        netIncomeMarriedFileJoint = ((netIncomeValue - 308621.00) / .65) + 400000;
+    } else if (netIncomeValue > 600001) {
+        netIncomeMarriedFileJoint = ((netIncomeValue - 438621.00) / .63) + 600000;
+    }
+
+    // filing single federal tax return calculations 
+    if (netIncomeValue > 0 && netIncomeValue <= 9526) {
+        var tempAmount = netIncomeValue / .90;
+        if (tempAmount > 9525) {
+            netIncomeSingle = ((netIncomeValue - 8572.50) / .88) + 9525;
+        } else {
+            netIncomeSingle = tempAmount;
+        }
+    } else if (netIncomeValue > 9526 && netIncomeValue <= 38700) {
+        netIncomeSingle = ((netIncomeValue - 8572.50) / .88) + 9525;
+    } else if (netIncomeValue > 38701 && netIncomeValue < 82500) {
+        netIncomeSingle = ((netIncomeValue - 34246.50) / .78) + 38700;
+    } else if (netIncomeValue > 82501 && netIncomeValue < 157500) {
+        var tempVal = ((netIncomeValue - 68410.50) / .76) + 82500;
+        if (tempVal > 157500) {
+            netIncomeSingle = ((netIncomeValue - 125410.50) / .68) + 157500;
+        } else {
+            netIncomeSingle = tempVal;
+        }
+    } else if (netIncomeValue > 157501 && netIncomeValue <= 200000) {
+        var tempVal = ((netIncomeValue - 125410.50) / .68) + 157500;
+        if (tempVal > 200000) {
+            netIncomeSingle = ((netIncomeValue - 186400) / .65) + 200000;
+        } else {
+            netIncomeSingle = tempVal;
+        }
+    } else if (netIncomeValue > 200001 && netIncomeValue <= 500000) {
+        var tempVal = ((netIncomeValue - 186400) / .65) + 200000;
+        if (tempVal > 500000) {
+            netIncomeSingle = ((netIncomeValue - 349310.50) / .63) + 500000;
+        } else {
+            netIncomeSingle = tempVal;
+        }
+    } else if (netIncomeValue > 500001) {
+        netIncomeSingle = ((netIncomeValue - 349310.50) / .63) + 500000;
+    }
+
+    singleTaxes = netIncomeSingle - netIncomeValue;
+    singleTaxRate = (singleTaxes / netIncomeSingle) * 100;
+    marriedTaxes = netIncomeMarriedFileJoint - netIncomeValue;
+    marriedTaxRate = (marriedTaxes / netIncomeSingle) * 100;
+	
+try{
+	const result = app.client.chat.postMessage({
+	token: process.env.TOKEN,
+	channel: 'D01F46BL5QE',
+	text: "Required income to net a specific income.",
+	attachments:'[{"color": "#3AA3E3","blocks":[{"type": "section","text": {"type": "mrkdwn","text": "Married: Gross Income :'+  netIncomeValue.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +'"}},{"type": "section","text": {"type": "mrkdwn","text": "Married Fed Tax / Tax Rate % :'+  (netIncomeMarriedFileJoint - netIncomeValue).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " / " + marriedTaxRate.toFixed(2) +'%"}},{"type": "section","text": {"type": "mrkdwn","text": "Single Gross Income :'+  netIncomeSingle.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +'"}},{"type": "section","text": {"type": "mrkdwn","text": "Single Fed Tax / Tax Rate %:'+  (netIncomeSingle - netIncomeValue).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " / " + singleTaxRate.toFixed(2) +'%"}}]}]',
+    });
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'stockQuoteHandler'
+	})
+  }
+	
+
+
+}
+
 
 /*** Stock Quote Handler function ***/
 function stockQuoteHandler(req, res, next){
-
-
    var stockSymbol = '';
     if (req.body.queryResult.queryText) {
         stockSymbol = req.body.queryResult.queryText.toLowerCase().replace(/quote:/g, "").replace(/stock:/g, "").trim();
     }
 
     var urlYahooFinance = "https://finance.yahoo.com/quote/" + stockSymbol + "?p=" + stockSymbol + "&.tsrc=fin-srch";
-   console.log(urlYahooFinance);
+  
 	
  try{
 	const result = app.client.chat.postMessage({
