@@ -130,6 +130,10 @@ router.post('/', function (req, res, next) {
 	 case "JIRA-SpecProj":
 		jiraSearchITProj(req, res, next);
 		break;
+	 case "MyTask":
+                // Top IT Projects
+                jiraMyTasksHandler(req, res, next);
+                break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -141,11 +145,30 @@ router.post('/', function (req, res, next) {
     }
 });
 
+/*** My Task Handler Function ***/
+function jiraMyTasksHandler(req, res, next){
 
+ try{
+	const result = app.client.chat.postMessage({
+	token: process.env.TOKEN,
+	channel: 'D01F46BL5QE',
+	text: "Fetching My JIRA Tasks ...",
+	attachments:'[{"color": "#3AA3E3","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Please standby as I fetch your JIRA tasks."}}]}]',
+    });
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'jiraSearchITProj'
+	})
+  }
+
+
+}
 /**** JIRA Spec Proj ***/
 function jiraSearchITProj(req, res, next){
 
-	try{
+try{
 	const result = app.client.chat.postMessage({
 	token: process.env.TOKEN,
 	channel: 'D01F46BL5QE',
