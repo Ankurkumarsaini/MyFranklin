@@ -158,7 +158,7 @@ function stockQuoteHandler(req, res, next){
 
    var stockSymbol = '';
     if (req.body.queryResult.queryText) {
-        stockSymbol = req.body.queryResult.queryText.toLowerCase().replace(/quote: /g, "").replace(/stock: /g, "").trim();
+        stockSymbol = req.body.queryResult.queryText.toLowerCase().replace(/quote:/g, "").replace(/stock:/g, "").trim();
     }
 
     var urlYahooFinance = "https://finance.yahoo.com/quote/" + stockSymbol + "?p=" + stockSymbol + "&.tsrc=fin-srch";
