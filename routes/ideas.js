@@ -169,13 +169,13 @@ function stockQuoteHandler(req, res, next){
 	token: process.env.TOKEN,
 	channel: 'D01F46BL5QE',
 	text: "Stock Quote",
-	attachments:'[{"color": "#3AA3E3","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stock Symbol: " + stockSymbol"}}]}]',
+	attachments:'[{"color": "#3AA3E3","blocks":[{"type": "section","text": {"type": "mrkdwn","text": "Stock Symbol: '+ stockSymbol +'"}},{"type": "actions","elements": [{"type": "button","text": {"type": "plain_text","text": "Yahoo Finance"},"style": "primary","url":"' + urlYahooFinance + '"}]}]}]',
     });
 	console.log(result);
     }catch (error) {
     return res.json({
 	fulfillmentText: 'Could not get results at this time',
-	source: 'jiraSearchITProj'
+	source: 'stockQuoteHandler'
 	})
   }
 
@@ -198,7 +198,7 @@ function jiraMyTasksHandler(req, res, next){
     }catch (error) {
     return res.json({
 	fulfillmentText: 'Could not get results at this time',
-	source: 'jiraSearchITProj'
+	source: 'jiraMyTasksHandler'
 	})
   }
 
