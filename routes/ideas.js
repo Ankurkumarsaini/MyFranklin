@@ -162,7 +162,22 @@ function stockQuoteHandler(req, res, next){
     }
 
     var urlYahooFinance = "https://finance.yahoo.com/quote/" + stockSymbol + "?p=" + stockSymbol + "&.tsrc=fin-srch";
-	console.log(urlYahooFinance);
+   console.log(urlYahooFinance);
+	
+ try{
+	const result = app.client.chat.postMessage({
+	token: process.env.TOKEN,
+	channel: 'D01F46BL5QE',
+	text: "Stock Quote",
+	attachments:'[{"color": "#3AA3E3","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Stock Symbol: " + stockSymbol"}}]}]',
+    });
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'jiraSearchITProj'
+	})
+  }
 
 	
 }
