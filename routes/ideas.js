@@ -22,7 +22,7 @@ const app = new App({
 
 router.post('/', function (req, res, next) {
 	
- console.log(req);	
+ console.log(req.body.queryResult);	
 	
  var intentName = req.body.queryResult.intent.displayName;
     console.log(intentName);
