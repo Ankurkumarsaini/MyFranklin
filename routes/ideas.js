@@ -137,6 +137,9 @@ router.post('/', function (req, res, next) {
                 // Top IT Projects
                 jiraMyTasksHandler(req, res, next);
                 break;		
+	case "StockQuote":
+                stockQuoteHandler(req, res, next);
+                break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -147,6 +150,24 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/*** Stock Quote Handler function ***/
+function stockQuoteHandler(req, res, next){
+
+
+   var stockSymbol = '';
+    if (req.body.queryResult.queryText) {
+        stockSymbol = req.body.queryResult.queryText.toLowerCase().replace(/quote: /g, "").replace(/stock: /g, "").trim();
+    }
+
+    var urlYahooFinance = "https://finance.yahoo.com/quote/" + stockSymbol + "?p=" + stockSymbol + "&.tsrc=fin-srch";
+	console.log(urlYahooFinance);
+
+	
+}
+
+
 
 /*** My Task Handler Function ***/
 function jiraMyTasksHandler(req, res, next){
