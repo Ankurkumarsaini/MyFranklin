@@ -126,7 +126,10 @@ router.post('/', function (req, res, next) {
                 break;	
 	 case "actionExample":
                 actionExampleHandler(req, res, next);
-                break;		
+                break;
+	 case "JIRA-SpecProj":
+		jiraSearchITProj(req, res, next);
+		break;
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -137,6 +140,26 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/**** JIRA Spec Proj ***/
+function jiraSearchITProj(req, res, next){
+
+	try{
+	const result = app.client.chat.postMessage({
+	token: process.env.TOKEN,
+	channel: 'D01F46BL5QE',
+	text: "IT JIRA Projects ...",
+	attachments:'[{"color": "#3AA3E3","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Processing your search for N.A ."}]}}]',
+	});
+	console.log(result);
+    }catch (error) {
+    return res.json({
+	fulfillmentText: 'Could not get results at this time',
+	source: 'jiraSearchITProj'
+	})
+  }
+}
 
 /*** ActionExample Handler Function ***/
 function  actionExampleHandler(req, res, next){
