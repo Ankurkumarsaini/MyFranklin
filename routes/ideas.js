@@ -142,6 +142,10 @@ router.post('/', function (req, res, next) {
                 break;	
 	case "CalculateGrossIncome":
                 calculateGrossIncome(req, res, next);
+                break;	
+	 case "Joker":
+                // joke (Dad jokes)
+                jokeHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -153,6 +157,43 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+
+/*** Joke Handler function ****/
+function jokeHandler(req, res, next){
+
+	var options = {
+        uri: 'https://icanhazdadjoke.com/',
+        method: 'GET',
+        json: true,
+        headers: {
+            "Accept": 'text/plain'
+        }
+    };
+
+    return rp(options)
+        .then(response => {
+			
+			 try 
+			    {
+		            const result = app.client.chat.postMessage({
+			     token: process.env.TOKEN,
+			     channel: 'D01F46BL5QE',
+			     text:"",
+			      attachments:'[{"blocks":[{"type": "section","text": {"type": "mrkdwn","text": ":laughing: ' + response +'"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","emoji": true,"text":"Tell Me a Dad Joke"},"style":"primary","value": "click_another_joke"},{"type":"button","text":{"type":"plain_text","emoji": true,"text":"Tell Me a Lawyer Joke"},"style":"primary","value": "click_lawyer_joke"},{"type":"button","text":{"type":"plain_text","emoji": true,"text":"Tell Me a IT Joke"},"style":"primary","value": "click_it_joke"}]}]}]',
+			
+				  });
+		}catch (error) {
+			
+			return res.json({
+			fulfillmentText: 'Could not get results at this time',
+			source: 'stockQuoteHandler'
+			})
+		}
+				});
+
+}
 
 /*** calculate gross income handler function ***/
 
