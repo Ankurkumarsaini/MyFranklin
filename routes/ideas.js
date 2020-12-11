@@ -147,9 +147,11 @@ router.post('/', function (req, res, next) {
                 // joke (Dad jokes)
                 jokeHandler(req, res, next);
                 break;	
-	case "BacklogProject":
-                // joke (Dad jokes)
+	case "BacklogProject":                
                 backlogHandler(req, res, next);
+                break;	
+	case "BacklogUser":               
+                backlogCurrentUserHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -162,6 +164,36 @@ router.post('/', function (req, res, next) {
     }
 });
 
+
+/***backlog current user info handler function ****/
+
+function backlogCurrentUserHandler(req, res, next){
+	var options = {
+        uri: 'https://droisys.backlog.com/api/v2/users/myself?apiKey='+ process.env.BACKLOG_TOKEN,
+        method: 'GET',
+        json: true,
+        headers: {
+            "Accept": 'text/plain'
+        }
+    };
+
+    return rp(options)
+        .then(response => {
+			 console.log(response);				 
+			 try 
+			    {
+				const result = app.client.chat.postMessage({
+				token: process.env.TOKEN,
+			        channel: 'D01F46BL5QE',
+				text:"*Backlog Current User Name*",
+				attachments:'[{"color": "#3AA3E3","text":"User Name : '  + response.name +' "}]',					
+				  });
+			}catch (error) {
+
+				console.log(error);
+			}   
+	 });
+}
 
 /*** backlog Project Handler function ***/
 function backlogHandler(req, res, next){
@@ -191,8 +223,7 @@ function backlogHandler(req, res, next){
 			
 			console.log(error);
 		}   
-	
-				});
+	 });
 }
 
 
