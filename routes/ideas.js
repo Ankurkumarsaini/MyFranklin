@@ -158,6 +158,9 @@ router.post('/', function (req, res, next) {
                 break;	
 	case "BacklogClosedIssueCount":               
                 backlogCloseIssueHandler(req, res, next);
+                break;
+	case "BacklogOpenIssueList":               
+                backlogOpenIssueListHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -169,6 +172,50 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/*** Backlog Open Issue listing Handler Function ***/
+function backlogOpenIssueListHandler(req, res, next){
+
+	var options = {
+        uri: 'https://droisys.backlog.com/api/v2/issues?projectId[]=33132&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
+        method: 'GET',
+        json: true,
+        headers: {
+            "Accept": 'text/plain'
+        }
+    };
+
+    return rp(options)
+        .then(response => {
+			 console.log(response);	
+	                 var text='';
+	    		for(var i=0;i<response.length;i++){								 
+			 text +='\n*\Issue No*\: '+ response[i].issueKey;
+			 text +='\n*\Summary*\:'+ response[i].summary;
+			 text +='\n*\Description*\:'+ response[i].description;
+			 text +='\n*\Status*\:'+ response[i].status.name;
+			 text +='\n*\Assignee*\ :'+ response[i].assignee.name;
+			 text +='\n*\Create By*\ :'+ response[i].createdUser.name;
+			 text +='\n\n';		
+			 }
+			 try 
+			    {
+				const result = app.client.chat.postMessage({
+				token: process.env.TOKEN,
+			        channel: 'D01F46BL5QE',
+				text:"*List of Open Issue*",
+				attachments:'[{"color": "#3AA3E3","text":"' +  text + '"}]',					
+				  });
+			}catch (error) {
+
+				console.log(error);
+			}   
+	 });
+
+}
+
+
 
 
 /*** backlog CLose Issue Count info Handler function **/
