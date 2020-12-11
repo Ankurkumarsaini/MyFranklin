@@ -155,6 +155,9 @@ router.post('/', function (req, res, next) {
                 break;
 	case "BacklogOpenIssueCount":               
                 backlogOpenIssueHandler(req, res, next);
+                break;	
+	case "BacklogClosedIssueCount":               
+                backlogCloseIssueHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -168,8 +171,39 @@ router.post('/', function (req, res, next) {
 });
 
 
-/***backlog Open Issue Count info handler function ****/
+/*** backlog CLose Issue Count info Handler function **/
+function backlogCloseIssueHandler(req, res, next){
+	var options = {
+        uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=33132&assigneeId[]=125045&statusId[]=4&apiKey='+ process.env.BACKLOG_TOKEN,
+        method: 'GET',
+        json: true,
+        headers: {
+            "Accept": 'text/plain'
+        }
+    };
 
+    return rp(options)
+        .then(response => {
+			 console.log(response);				 
+			 try 
+			    {
+				const result = app.client.chat.postMessage({
+				token: process.env.TOKEN,
+			        channel: 'D01F46BL5QE',
+				text:"*Backlog Total Close Issue*",
+				attachments:'[{"color": "#3AA3E3","text":"Total Close Issue : '  + response.count +' "}]',					
+				  });
+			}catch (error) {
+
+				console.log(error);
+			}   
+	 });
+}
+
+
+
+
+/***backlog Open Issue Count info handler function ****/
 function backlogOpenIssueHandler(req, res, next){
 	var options = {
         uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=33132&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
