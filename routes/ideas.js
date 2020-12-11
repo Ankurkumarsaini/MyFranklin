@@ -170,7 +170,7 @@ router.post('/', function (req, res, next) {
 
 /***backlog Open Issue Count info handler function ****/
 
-function backlogCurrentUserHandler(req, res, next){
+function backlogOpenIssueHandler(req, res, next){
 	var options = {
         uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=33132&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
         method: 'GET',
