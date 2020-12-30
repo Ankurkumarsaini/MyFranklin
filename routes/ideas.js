@@ -5,7 +5,6 @@ var router = express.Router();
 const http = require('http');
 const https = require('https');
 const axios = require('axios');
-
 const { App, LogLevel } = require("@slack/bolt");
 
 router.get('/', function (req, res, next) {    
@@ -13,24 +12,22 @@ router.get('/', function (req, res, next) {
 });
 
 const app = new App({
-  token: process.env.TOKEN,
-  signingSecret: process.env.SIGNING_TOKEN,
+  token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+  signingSecret: '7593fc5c302a093f8b3035a7df3b2f2d',
   // LogLevel can be imported and used to make debugging simpler
   logLevel: LogLevel.DEBUG
 });
 
 
 router.post('/', function (req, res, next) {
-	
- console.log(req.body.queryResult);	
-	
  var intentName = req.body.queryResult.intent.displayName;
     console.log(intentName);
+     console.log('hello!');	
     try {
         switch (intentName) {	
-	    case "JIRA-NewIdea":                
+	     case "JIRA-NewIdea":                
                 addNewIdeaWithName(req, res, next);
-                break;
+                break;		
 	     case "BuzzWord":
                 // corporate buzz word generator
                 buzzWordHandler(req, res, next);
@@ -38,10 +35,10 @@ router.post('/', function (req, res, next) {
 	     case "Help":                
                 helpHandler(req, res, next);
                 break;
-	    case "orderCafeteria":
+	     case "orderCafeteria":
                 orderCafeteriaHandler(req, res, next);
-                break;	
-	    case "IncidentMgt":
+                break;		
+	     case "IncidentMgt":
                 // Returns incident management info
                 incidentMgtHandler(req, res, next);
                 break;
@@ -51,8 +48,8 @@ router.post('/', function (req, res, next) {
 	    case "lawyerJokes":
                 // random lawyer joke
                 lawyerJokesHandler(req, res, next);
-                break;
-	    case "PExcuses":
+                break;	
+	     case "PExcuses":
                 // speeding excuses
                 speedingExcuseHandler(req, res, next);
                 break;
@@ -66,58 +63,58 @@ router.post('/', function (req, res, next) {
                 break;	
 	    case "mytest":
                 mytestHandler(req, res, next);
-                break;
-	    case "MathFacts":
+                break;		
+	     case "MathFacts":
                 mathFactsHandler(req, res, next);
                 break;
 	    case "changemgt":
                 changeMgtHandler(req, res, next);
-                break;
-	     case "gant":
+                break;		
+	   case "gant":
                 gantHandler(req, res, next);
                 break;
-	     case "gchart":
+	   case "gchart":
                 gchartHandler(req, res, next);
                 break;	
-	     case "GenesysSalesforce":
+	    case "GenesysSalesforce":
                 genesysSalesforceHandler(req, res, next);
                 break;	
 	    case "HowFranklinWorks":
                 howFranklinWorksHandler(req, res, next);
-                break;
-	    case "NetworkState":
-                networkStateHandler(req, res, next);
-                break;
-	    case "okta":
-                oktaHandler(req, res, next);
-                break;
-	    case "roomLocation":
-                roomLocationHandler(req, res, next);
-                break;		
-	   case "Sacremento":
-                sacramentoHandler(req, res, next);
                 break;	
-	   case "sanmateoweather":
-                sanmateoWeatherHandler(req, res, next);
-                break;
-	   case "TempeWeather":
-                tempeWeatherHandler(req, res, next);
-                break;
-	   case "TwilioDomoReports":
-                twilioDomoReports(req, res, next);
-                break;
-	   case "UnclearedPaymentsProcess":
-                unclearedPmtsProcessHandler(req, res, next);
-                break;
-	   case "brightIdea":
-                brightIdeaHandler(req, res, next);
-                break;
-	   case "fdrSalesIntake":
-                fdrSalesIntakeHandler(req, res, next);
-                break;	
+	   case "NetworkState":
+		networkStateHandler(req, res, next);
+		break;	
+	   case "okta":
+		oktaHandler(req, res, next);
+		break;
+	   case "roomLocation":
+		roomLocationHandler(req, res, next);
+		break;
+	  case "Sacremento":
+		sacramentoHandler(req, res, next);
+		break;	
+          case "sanmateoweather":
+		sanmateoWeatherHandler(req, res, next);
+		break;	
+	  case "TempeWeather":
+		tempeWeatherHandler(req, res, next);
+		break;
+	  case "TwilioDomoReports":
+		twilioDomoReports(req, res, next);
+		break;	
+	  case "UnclearedPaymentsProcess":
+		unclearedPmtsProcessHandler(req, res, next);
+		break;	
+	  case "brightIdea":
+		brightIdeaHandler(req, res, next);
+		break;
+	  case "fdrSalesIntake":
+		fdrSalesIntakeHandler(req, res, next);
+		break;	
 	  case "todoTest":
                 todoTestHandler(req, res, next);
-                break;	
+                break;
 	 case "franklinStatistics":
                 franklinStatsHandler(req, res, next);
                 break;	
@@ -127,41 +124,22 @@ router.post('/', function (req, res, next) {
 	 case "taskManager":
                 taskManagerHandler(req, res, next);
                 break;	
-	 case "actionExample":
+	  case "actionExample":
                 actionExampleHandler(req, res, next);
                 break;
-	 case "JIRA-SpecProj":
+	  case "JIRA-SpecProj":
 		jiraSearchITProj(req, res, next);
 		break;
-	 case "MyTask":
+	   case "MyTask":
                 // Top IT Projects
                 jiraMyTasksHandler(req, res, next);
-                break;		
-	case "StockQuote":
+                break;	
+	  case "StockQuote":
                 stockQuoteHandler(req, res, next);
                 break;	
-	case "CalculateGrossIncome":
+	  case "CalculateGrossIncome":
                 calculateGrossIncome(req, res, next);
-                break;	
-	 case "Joker":
-                // joke (Dad jokes)
-                jokeHandler(req, res, next);
-                break;	
-	case "BacklogProject":                
-                backlogHandler(req, res, next);
-                break;	
-	case "BacklogUser":               
-                backlogCurrentUserHandler(req, res, next);
-                break;
-	case "BacklogOpenIssueCount":               
-                backlogOpenIssueHandler(req, res, next);
-                break;	
-	case "BacklogClosedIssueCount":               
-                backlogCloseIssueHandler(req, res, next);
-                break;
-	case "BacklogOpenIssueList":               
-                backlogOpenIssueListHandler(req, res, next);
-                break;		
+                break;			
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -172,210 +150,6 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
-
-
-/*** Backlog Open Issue listing Handler Function ***/
-function backlogOpenIssueListHandler(req, res, next){
-
-	var options = {
-        uri: 'https://droisys.backlog.com/api/v2/issues?projectId[]=33132&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
-        method: 'GET',
-        json: true,
-        headers: {
-            "Accept": 'text/plain'
-        }
-    };
-
-    return rp(options)
-        .then(response => {
-			 console.log(response);	
-	                 var text='';
-	    		for(var i=0;i<response.length;i++){								 
-			 text +='\n*\Issue No*\: '+ response[i].issueKey;
-			 text +='\n*\Summary*\:'+ response[i].summary;
-			 text +='\n*\Description*\:'+ response[i].description;
-			 text +='\n*\Status*\:'+ response[i].status.name;
-			 text +='\n*\Assignee*\ :'+ response[i].assignee.name;
-			 text +='\n*\Create By*\ :'+ response[i].createdUser.name;
-			 text +='\n\n';		
-			 }
-			 try 
-			    {
-				const result = app.client.chat.postMessage({
-				token: process.env.TOKEN,
-			        channel: 'D01F46BL5QE',
-				text:"*List of Open Issue*",
-				attachments:'[{"color": "#3AA3E3","text":"' +  text + '"}]',					
-				  });
-			}catch (error) {
-
-				console.log(error);
-			}   
-	 });
-
-}
-
-
-
-
-/*** backlog CLose Issue Count info Handler function **/
-function backlogCloseIssueHandler(req, res, next){
-	var options = {
-        uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=33132&assigneeId[]=125045&statusId[]=4&apiKey='+ process.env.BACKLOG_TOKEN,
-        method: 'GET',
-        json: true,
-        headers: {
-            "Accept": 'text/plain'
-        }
-    };
-
-    return rp(options)
-        .then(response => {
-			 console.log(response);				 
-			 try 
-			    {
-				const result = app.client.chat.postMessage({
-				token: process.env.TOKEN,
-			        channel: 'D01F46BL5QE',
-				text:"*Backlog Total Close Issue*",
-				attachments:'[{"color": "#3AA3E3","text":"Total Close Issue : '  + response.count +' "}]',					
-				  });
-			}catch (error) {
-
-				console.log(error);
-			}   
-	 });
-}
-
-
-
-
-/***backlog Open Issue Count info handler function ****/
-function backlogOpenIssueHandler(req, res, next){
-	var options = {
-        uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=33132&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
-        method: 'GET',
-        json: true,
-        headers: {
-            "Accept": 'text/plain'
-        }
-    };
-
-    return rp(options)
-        .then(response => {
-			 console.log(response);				 
-			 try 
-			    {
-				const result = app.client.chat.postMessage({
-				token: process.env.TOKEN,
-			        channel: 'D01F46BL5QE',
-				text:"*Backlog Total Open Issue*",
-				attachments:'[{"color": "#3AA3E3","text":"Total Open Issue : '  + response.count +' "}]',					
-				  });
-			}catch (error) {
-
-				console.log(error);
-			}   
-	 });
-}
-
-
-/***backlog current user info handler function ****/
-
-function backlogCurrentUserHandler(req, res, next){
-	var options = {
-        uri: 'https://droisys.backlog.com/api/v2/users/myself?apiKey='+ process.env.BACKLOG_TOKEN,
-        method: 'GET',
-        json: true,
-        headers: {
-            "Accept": 'text/plain'
-        }
-    };
-
-    return rp(options)
-        .then(response => {
-			 console.log(response);				 
-			 try 
-			    {
-				const result = app.client.chat.postMessage({
-				token: process.env.TOKEN,
-			        channel: 'D01F46BL5QE',
-				text:"*Backlog Current User Name*",
-				attachments:'[{"color": "#3AA3E3","text":"User Name : '  + response.name +' "}]',					
-				  });
-			}catch (error) {
-
-				console.log(error);
-			}   
-	 });
-}
-
-/*** backlog Project Handler function ***/
-function backlogHandler(req, res, next){
-
-	var options = {
-        uri: 'https://droisys.backlog.com/api/v2/projects/33132?apiKey='+ process.env.BACKLOG_TOKEN,
-        method: 'GET',
-        json: true,
-        headers: {
-            "Accept": 'text/plain'
-        }
-    };
-
-    return rp(options)
-        .then(response => {
-			 console.log(response);		 
-			 
-			 try 
-			    {
-				const result = app.client.chat.postMessage({
-				token: process.env.TOKEN,
-			        channel: 'D01F46BL5QE',
-				text:"*Backlog Project Name*",
-				attachments:'[{"color": "#3AA3E3","text":"Project Name : '  + response.name +' "}]',					
-				  });
-		}catch (error) {
-			
-			console.log(error);
-		}   
-	 });
-}
-
-
-/*** Joke Handler function ****/
-function jokeHandler(req, res, next){
-
-	var options = {
-        uri: 'https://icanhazdadjoke.com/',
-        method: 'GET',
-        json: true,
-        headers: {
-            "Accept": 'text/plain'
-        }
-    };
-
-    return rp(options)
-        .then(response => {
-			
-			 try 
-			    {
-		            const result = app.client.chat.postMessage({
-			     token: process.env.TOKEN,
-			     channel: 'D01F46BL5QE',
-			     text:"",
-			      attachments:'[{"blocks":[{"type": "section","text": {"type": "mrkdwn","text": ":laughing: ' + response +'"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","emoji": true,"text":"Tell Me a Dad Joke"},"style":"primary","value": "click_another_joke"},{"type":"button","text":{"type":"plain_text","emoji": true,"text":"Tell Me a Lawyer Joke"},"style":"primary","value": "click_lawyer_joke"},{"type":"button","text":{"type":"plain_text","emoji": true,"text":"Tell Me a IT Joke"},"style":"primary","value": "click_it_joke"}]}]}]',
-			
-				  });
-		}catch (error) {
-			
-			return res.json({
-			fulfillmentText: 'Could not get results at this time',
-			source: 'stockQuoteHandler'
-			})
-		}
-				});
-
-}
 
 /*** calculate gross income handler function ***/
 
@@ -456,7 +230,7 @@ function calculateGrossIncome(req, res, next){
 	
 try{
 	const result = app.client.chat.postMessage({
-	token: process.env.TOKEN,
+	token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
 	channel: 'D01F46BL5QE',
 	text: "Required income to net a specific income.",
 	attachments:'[{"color": "#3AA3E3","blocks":[{"type": "section","text": {"type": "mrkdwn","text": "Married: Gross Income :'+  netIncomeValue.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +'"}},{"type": "section","text": {"type": "mrkdwn","text": "Married Fed Tax / Tax Rate % :'+  (netIncomeMarriedFileJoint - netIncomeValue).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " / " + marriedTaxRate.toFixed(2) +'%"}},{"type": "section","text": {"type": "mrkdwn","text": "Single Gross Income :'+  netIncomeSingle.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +'"}},{"type": "section","text": {"type": "mrkdwn","text": "Single Fed Tax / Tax Rate %:'+  (netIncomeSingle - netIncomeValue).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " / " + singleTaxRate.toFixed(2) +'%"}}]}]',
@@ -468,11 +242,7 @@ try{
 	source: 'stockQuoteHandler'
 	})
   }
-	
-
-
 }
-
 
 /*** Stock Quote Handler function ***/
 function stockQuoteHandler(req, res, next){
@@ -486,8 +256,8 @@ function stockQuoteHandler(req, res, next){
 	
  try{
 	const result = app.client.chat.postMessage({
-	token: process.env.TOKEN,
-	channel: 'D01F46BL5QE',
+	token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	channel:'D01F46BL5QE',
 	text: "Stock Quote",
 	attachments:'[{"color": "#3AA3E3","blocks":[{"type": "section","text": {"type": "mrkdwn","text": "Stock Symbol: '+ stockSymbol +'"}},{"type": "actions","elements": [{"type": "button","text": {"type": "plain_text","text": "Yahoo Finance"},"style": "primary","url":"' + urlYahooFinance + '"}]}]}]',
     });
@@ -497,11 +267,8 @@ function stockQuoteHandler(req, res, next){
 	fulfillmentText: 'Could not get results at this time',
 	source: 'stockQuoteHandler'
 	})
-  }
-
-	
+  }	
 }
-
 
 
 /*** My Task Handler Function ***/
@@ -509,8 +276,8 @@ function jiraMyTasksHandler(req, res, next){
 
  try{
 	const result = app.client.chat.postMessage({
-	token: process.env.TOKEN,
-	channel: 'D01F46BL5QE',
+	token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	channel:'D01F46BL5QE',
 	text: "Fetching My JIRA Tasks ...",
 	attachments:'[{"color": "#3AA3E3","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Please standby as I fetch your JIRA tasks."}}]}]',
     });
@@ -521,16 +288,15 @@ function jiraMyTasksHandler(req, res, next){
 	source: 'jiraMyTasksHandler'
 	})
   }
-
-
 }
+
 /**** JIRA Spec Proj ***/
 function jiraSearchITProj(req, res, next){
 
 try{
 	const result = app.client.chat.postMessage({
-	token: process.env.TOKEN,
-	channel: 'D01F46BL5QE',
+	token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	channel:'D01F46BL5QE',
 	text: "IT JIRA Projects ...",
 	attachments:'[{"color": "#3AA3E3","blocks": [{"type": "section","text": {"type": "mrkdwn","text": "Processing your search for N.A ."}}]}]',
 	});
@@ -543,13 +309,14 @@ try{
   }
 }
 
+
 /*** ActionExample Handler Function ***/
 function  actionExampleHandler(req, res, next){
 	
  try{
 	const result = app.client.chat.postMessage({
-	token: process.env.TOKEN,
-	channel: 'D01F46BL5QE',
+	token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	channel:'D01F46BL5QE',
 	text: "",
 	attachments:'[{"blocks": [{"type": "section","text": {"type": "mrkdwn","text": "You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"}},{"type": "section","fields":[{"type": "mrkdwn", "text": "*Type:*\nComputer (laptop)"},{"type": "mrkdwn","text": "*When:*\nSubmitted Aut 10"},{"type": "mrkdwn","text": "*Last Update:*\nMar 10, 2015 (3 years, 5 months)"},{"type": "mrkdwn","text": "*Reason:*\nAll vowel keys aren\'t working."},{"type": "mrkdwn","text": "*Specs:*\n\ Cheetah Pro 15 - Fast, really fast"}]},{"type": "actions","elements":[{"type": "button","text": {"type": "plain_text","emoji": true,"text": "Approve"},"style": "primary","value": "click_me_123"},{"type": "button","text": {"type": "plain_text","emoji": true,"text": "Deny"},"style": "danger","value": "click_me_123"}]}]}]',
 	});
@@ -567,8 +334,8 @@ function  actionExampleHandler(req, res, next){
 function taskManagerHandler(req, res, next){
 try{
 	const result = app.client.chat.postMessage({
-	token: process.env.TOKEN,
-	channel: 'D01F46BL5QE',
+	token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	channel:'D01F46BL5QE',
 	text: "",
 	attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"*Daily Task Manager*\nUse to manage my daily tasks."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Add New Task","emoji":true},"style":"primary","value":"todo_add_new_task"},{"type":"button","text":{"type":"plain_text","text":"View Incomplete Tasks","emoji":true},"style":"primary","value":"todo_view_incompleted_tasks"},{"type":"button","text":{"type":"plain_text","text":"View Completed Tasks","emoji":true},"style":"primary","value":"todo_view_completed_tasks"},{"type":"button","text":{"type":"plain_text","text":"View Tasks Due Today","emoji":true},"style":"primary","value":"todo_tasks_due_today"},{"type":"button","text":{"type":"plain_text","text":"View Tasks Due This Week","emoji":true},"style":"primary","value":"todo_weekly_tasks"}]}]}]',
 	});
@@ -585,8 +352,8 @@ try{
 function managerReportHandler(req, res, next){
  try{
 	const result = app.client.chat.postMessage({
-	token: process.env.TOKEN,
-	channel: 'D01F46BL5QE',
+	token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	channel:'D01F46BL5QE',
 	text: "",
 	attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"*CREATE TEAM REPORT*\nBy date range by team member"}},{"type":"section","text":{"type":"mrkdwn","text":"Pick team member from list"},"accessory":{"type":"multi_static_select","placeholder":{"type":"plain_text","text":"Select a member","emoji":true},"options":[{"text":{"type":"plain_text","text":"Glenn","emoji":true},"value":"value-0"},{"text":{"type":"plain_text","text":"Jay","emoji":true},"value":"value-1"},{"text":{"type":"plain_text","text":"Robbie","emoji":true},"value":"value-2"},{"text":{"type":"plain_text","text":"Georgina","emoji":true},"value":"value-3"}]}},{"type":"section","text":{"type":"mrkdwn","text":"Pick a start date."},"accessory":{"type":"datepicker","initial_date":"2019-10-03","placeholder":{"type":"plain_text","text":"Select a date","emoji":true}}},{"type":"section","text":{"type":"mrkdwn","text":"Pick an end date."},"accessory":{"type":"datepicker","initial_date":"2019-10-04","placeholder":{"type":"plain_text","text":"Select a date","emoji":true}}},{"type":"section","text":{"type":"mrkdwn","text":"Pick a report template."},"accessory":{"type":"static_select","placeholder":{"type":"plain_text","text":"Select a report","emoji":true},"options":[{"text":{"type":"plain_text","text":"Productivity","emoji":true},"value":"value-0"},{"text":{"type":"plain_text","text":"View closed items","emoji":true},"value":"value-1"},{"text":{"type":"plain_text","text":"View open items","emoji":true},"value":"value-2"},{"text":{"type":"plain_text","text":"Calculate Bonuses","emoji":true},"value":"value-3"},{"text":{"type":"plain_text","text":"FTE Estimate to Execute Plan","emoji":true},"value":"value-4"},{"text":{"type":"plain_text","text":"Distribute Unasigned Work (AI)","emoji":true},"value":"value-5"},{"text":{"type":"plain_text","text":"Leaderboard","emoji":true},"value":"value-6"}]}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","emoji":true,"text":"VIEW REPORT"},"style":"primary","value":"click_view_mgr_report"},{"type":"button","text":{"type":"plain_text","emoji":true,"text":"CANCEL"},"style":"danger","value":"click_do_nothing"}]}]}]',
 	});
@@ -599,13 +366,14 @@ function managerReportHandler(req, res, next){
   }
 }
 
+
 /*** franklinStatistics handler function ***/
 function franklinStatsHandler(req, res, next){
     
   try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Franklin Stats ..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View My Statistics"},"url": "https://storage.googleapis.com/ffn-images/img/frankstats.html","style":"primary"}]}]}]',
 	});
@@ -621,13 +389,14 @@ function franklinStatsHandler(req, res, next){
 }
 
 
+
 /*** todo test handler function ***/
 function  todoTestHandler(req, res, next){
 
 	try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"To add a new todo item click the button below."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Add New Todo"},"style":"primary","value": "clickAddTodo"}]}]}]',
 	});
@@ -641,15 +410,13 @@ function  todoTestHandler(req, res, next){
 
 }
 
-
-
 /*** fdrsales Intake handler function ***/
 function fdrSalesIntakeHandler(req, res, next){
 
 	try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "",
 		 attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"FDR Intake ..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Create Request"},"url":"https://docs.google.com/forms/d/e/1FAIpQLSc4ObcOK7a5X-CeTV0MajMHcjbNpDmf1sDIfaFtZhOYqzyj7g/viewform","style":"primary"}]}]}]',	
 		});
@@ -668,8 +435,8 @@ function brightIdeaHandler(req, res, next){
 
  try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "",
 		 attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Brilliant Idea..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Create Idea"},"url":"https://sites.google.com/freedomdebtrelief.com/ffn-bright-ideas/home","style":"primary"}]}]}]',	
 		});
@@ -681,7 +448,6 @@ function brightIdeaHandler(req, res, next){
 	})
   }
 	
-	
 }
 
 /*** Uncleared Payment Process Handler function ***/
@@ -689,8 +455,8 @@ function unclearedPmtsProcessHandler(req, res, next){
 	
  try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "*Uncleared Payments Process Diagram*",
 		 attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Hey check out this diagram that outlines the process."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Diagram"},"url":"https://www.lucidchart.com/documents/view/206ec397-36df-475e-a186-ba3abcebc5b3","style":"primary"}]}]}]',	
 		});
@@ -704,14 +470,12 @@ function unclearedPmtsProcessHandler(req, res, next){
 
 }
 
-
-
 /*** Twilio Domo Report Handler Function ***/
 function twilioDomoReports(req, res, next){
  try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "*Twilio SMS delivered today, by hour*",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"(View link, use the right arrow to view pages.)"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Twilio Stats"},"url":"https://freedomfinancialnetwork.domo.com/link/EVJ5clmABStJHbAs","style":"primary"}]}]}]',
 			
@@ -722,14 +486,14 @@ function twilioDomoReports(req, res, next){
 	fulfillmentText: 'Could not get results at this time',
 	source: 'tempeWeatherHandler'
 	})
-  } }
-
+  } 
+}
 /***  tempeWeatherHandler  Handler function ***/
 function tempeWeatherHandler(req,res,next){
 	 try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "*Weather in Tempe, AZ*",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"View Tempe, AZ weather."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Tempe, AZ Weather"},"url":"https://weather.com/weather/today/l/USAZ0233:1:US","style":"primary"}]}]}]',
 
@@ -741,18 +505,15 @@ function tempeWeatherHandler(req,res,next){
 	source: 'tempeWeatherHandler'
 	})
   } 
-
 }
-
-
 
 /*** sanmateoWeather Handler  function ***/
 function sanmateoWeatherHandler(req, res, next){
   
  try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "*Weather in San Mateo, CA*",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"View San Mateo, CA weather."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View San Mateo, CA Weather"},"url":"https://weather.com/weather/today/l/USCA1005:1:US","style":"primary"}]}]}]',
 
@@ -771,8 +532,8 @@ function sanmateoWeatherHandler(req, res, next){
  function sacramentoHandler(req, res, next){
  try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "Escalation Plan",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"The escalation plan for IT urgent todo items."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Escalation in JIRA"},"url":"https://billsdev.atlassian.net/browse/PLAN-279","style":"primary"}]}]}]',
 
@@ -786,16 +547,16 @@ function sanmateoWeatherHandler(req, res, next){
   } 
  }
 
+
 /*** Room Location Handler function ****/
 function roomLocationHandler(req,res,next){
   
 try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "Can you ask \'Alfred\' where rooms are? You will get a map to the conference room. Thank you!",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Room Search Request"}}]}]',
-
 		});
 	console.log(result);
     }catch (error) {
@@ -806,13 +567,14 @@ try{
   } 
 }
 
+
 /***  okta Handler function ***/
  function oktaHandler(req,res,next){
 	 
  try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "*OKTA*",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"(View link, use the right arrow to view pages.)"}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View OKTA Data"},"url":"https://freedomfinancialnetwork.domo.com/link/IRQqVTpIo8ZvVzEl","style":"primary"}]}]}]',
 
@@ -833,7 +595,7 @@ function networkStateHandler(req,res,next){
 
   try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
 		channel: 'D01F46BL5QE',
 		text: "*CCP Network Map*",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Used to monitor basic up/down status as well as active production alarms."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View CCP Network Monitor"},"url":"https://prtg.freedomdebtrelief.com/public/mapshow.htm?id=19964&mapid=ccp-noc","style":"primary"}]}]}]',
@@ -853,10 +615,10 @@ function networkStateHandler(req,res,next){
 /*** how franklin works handler function ***/
 function howFranklinWorksHandler(req, res, next){
 
-try{
+    try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
 		text: "*Franklin - (How Franklin Works) Diagram*",
 		attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Franklin is a Slack chatbot created by FFN."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Dataflow Diagram"},"url":"https://www.lucidchart.com/documents/view/a6565a46-8e2e-4516-98dd-d77b1e9f47af","style":"primary"}]}]}]',
 
@@ -875,13 +637,13 @@ try{
 function genesysSalesforceHandler(req,res,next){
       try{
 			const result = app.client.chat.postMessage({
-			token: process.env.TOKEN,
-			channel: 'D01F46BL5QE',
+			token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+			channel:'D01F46BL5QE',
 			text: "*Genesys Salesforce Dataflow Diagram*",
 		        attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Dataflow diagram for Salesforce updates required for the \'debt settlment builder\'."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Dataflow Diagram"},"url":"https://www.lucidchart.com/documents/view/8e338621-9101-4f9a-bb17-8ab61d44e73b","style":"primary"}]}]}]',
 			
 			});
-				console.log(result);
+	      console.log(result);
 	    }catch (error) {
 	    return res.json({
 		fulfillmentText: 'Could not get results at this time',
@@ -896,8 +658,8 @@ function gchartHandler(req,res,next){
 
 try{
 	const result = app.client.chat.postMessage({
-			token: process.env.TOKEN,
-			channel: 'D01F46BL5QE',
+			token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+			channel:'D01F46BL5QE',
 			text: "A Google pie diagram example.",
 		        attachments:'[{"blocks":[{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Pie Diagram"},"url":"https://storage.googleapis.com/ffn-images/img/gpie.html","style":"primary"}]}]}]',
 		});
@@ -910,23 +672,19 @@ try{
 		source: 'gchart'
 		})
 	  }
-
-
 }
+
 
 /**** gant handler function ***/
 function gantHandler(req, res, next){
 	
 	try{
 	     const result = app.client.chat.postMessage({
-			token: process.env.TOKEN,
+			token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
 			channel: 'D01F46BL5QE',
 			text: "Google Gantt Chart Example",
 		        attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"A Google gantt chart example."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Gantt Chart"},"url":"https://storage.googleapis.com/ffn-images/img/ggant.html","style":"primary"}]}]}]',
-			
-		       // attachments:'[{"blocks":[{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Gantt Chart"},"url":"https://storage.googleapis.com/ffn-images/img/ggant.html","style":"primary"}]}]}]',
-		});
-	    
+		});	    
 		console.log(result);
 	    }catch (error) {
 	    return res.json({
@@ -942,89 +700,76 @@ function changeMgtHandler(req,res,next){
 
 	try{
 		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
 		channel: 'D01F46BL5QE',
 		text: "Change Management Diagram",
 		attachments:'[{"blocks":[{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"View Diagram"},"url":"https://www.lucidchart.com/documents/view/bb0c456b-e210-41e4-9ac0-fc93b901a9fa/0","style":"primary"}]}]}]'
-		});
-		
-		console.log(result);
-	    
+		});		
+		console.log(result);	    
 	}catch (error) {
 	    return res.json({
 		fulfillmentText: 'Could not get results at this time',
 		source: 'changemgt'
 		})
 	  }  
-
 }
 
-
-
-/*** my Test Handler Function ***/
-function mytestHandler(req, res, next){
-
-	try{
-		const result = app.client.chat.postMessage({
-		token: process.env.TOKEN,
-		channel: 'D01F46BL5QE',
-		text: "",
-		attachments:'[{"color":"#3AA3E3","blocks":[{"type":"section","text":{"type":"mrkdwn","text":"You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"}},{"type":"section","fields":[{"type":"mrkdwn","text":"\*Type:*\nComputer (laptop)"},{"type":"mrkdwn","text":"*When:*\nSubmitted Aut 10"},{"type":"mrkdwn","text":"*Last Update:*\nMar 10, 2015 (3 years, 5 months)"},{"type":"mrkdwn","text":"*Reason:*\nAll vowel keys aren\'t working."},{"type":"mrkdwn","text":"*Specs:*\nCheetah Pro 15 - Fast, really fast"}]},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","emoji":true,"text":"Approve"},"value":"click_me_123"},{"type":"button","text":{"type":"plain_text","emoji":true,"text":"Deny"},"value":"click_me_123"}]}]}]'
-		});
+/**** speeding execuses Handler Function ***/
+function speedingExcuseHandler(req, res, next){
+	var pExcuses = ["I'm sorry officer. I know I was speeding but I thought you wanted to race.",
+        "I'm sorry officer. I know I was speeding but I need to get my kid to the hospital. His nose implants are acting up and it wouldn't be good if my husband saw him like this. Then he would know that he isn't his son. Now, we don't want that to happen do we?",
+        "I'm sorry officer. I know I was speeding but I just couldn't believe it wasn't butter. I just HAVE to see for my self.",
+        "I'm sorry officer. I know I was speeding but to be honest, I don't think you were going the speed limit either.",
+        "I'm sorry officer. I know I was speeding but I stole this car.",
+        "I'm sorry officer. I know I was speeding but I thought you had to be in relatively good physical shape to be a police officer.",
+        "I'm sorry officer. I know I was speeding but how can I convince you otherwise?",
+        "I'm sorry officer. I know I was speeding but I know you were waiting for me so I got here as fast as I could!",
+        "I'm sorry officer. I know I was speeding but I am stunt driver and we are filming a movie!",
+        "I'm sorry officer. I know I was speeding but take some money. How about you go get yourself something nice.",
+        "I'm sorry officer. I know I was speeding but you see, I spotted you coming and knew if you caught up you'd see I was drinking. So I had to speed to try and out run you.",
+        "I'm sorry officer. I know I was speeding but I'm being stalked by 3 FBI cars and I'm trying to run away!",
+        "I'm sorry officer. I know I was speeding but I'VE SEEN YOU BEFORE! Aren't you in The Village People?",
+        "I'm sorry officer. I know I was speeding but I didn't want to be late for church.",
+        "I'm sorry officer. I know I was speeding but I was going cuckoo for Coco puffs!",
+        "I'm sorry officer. I know I was speeding but I'm a pregnant man!",
+        "I'm sorry officer. I know I was speeding but there was a giant anaconda chasing me!",
+        "I'm sorry officer. I know I was speeding but OH MY, aren't you a sexy officer?",
+        "'m sorry officer. I know I was speeding but all the signs say 81! Apparently that was the route number...",
+        "I'm sorry officer. I know I was speeding but my doctor gave me the wrong meds.",
+        "I'm sorry officer. I know I was speeding but I get 10 extra in the fast lane.",
+        "I'm sorry officer. I know I was speeding but my accident-prone fiance is home alone.",
+        "I'm sorry officer. I know I was speeding but I ran out of lip gloss!",
+        "I'm sorry officer. I know I was speeding but I had passed out after seeing flashing lights which I believed to be UFOs in the distance. The flash of the camera brought me round from my trance.",
+        "I'm sorry officer. I know I was speeding but I have to get home in time for Ugly Betty!",
+        "I'm sorry officer. I know I was speeding but WOW, officer, is that a V8? She looks nice, bets she goes and handles well, mind if take a look, please?",
+        "I'm sorry officer. I know I was speeding but the limit was not clearly posted.",
+        "I'm sorry officer. I know I was speeding but I am color blind and I thought that the speeding sign was the blue one!",
+        "I'm sorry officer. I know I was speeding but I have to get ice cream before the store closes!",
+        "I'm sorry officer. I know I was speeding but I have to get home quickly I left the stove on!",
+        "I'm sorry officer. I know I was speeding but I had a piece of jerky fall under the gas petal and I was trying to get it with my foot."
+    ];
+    var pIndex = Math.random() * (30 - 0) + 0;
+    var index = Math.round(pIndex);
+    try{
+	const result = app.client.chat.postMessage({
+				      // The token you used to initialize your app
+				      token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+				      channel: 'D01F46BL5QE',	  
+				      text:'Excuses for speeding...',					  
+				      attachments:'[{"color": "#3AA3E3","text":"'+ pExcuses[index] +'"}]',					  
+				    });
 		console.log(result);
-	    }catch (error) {
+					
+	 }catch (error) {
 	    return res.json({
-		fulfillmentText: 'Could not get results at this time',
-		source: 'MyTest'
+			fulfillmentText: 'Could not get results at this time',
+			source: 'PExcuses'
 		})
-	  }  
-
-
+	  }
 }
 
-/*** Poem Handler Function ***/
-function poemHandler(req,res,next){
 
- var options = {
-        uri: 'https://www.poemist.com/api/v1/randompoems',
-        method: 'GET',
-        json: true,
-        headers: {
-            "Accept": "application/json"
-        }
-    };
-	
-     return rp(options)
-        .then(result => {
-            var returnPoem = '';
-
-            for (var i = 0; i < result.length; i++) {
-                returnPoem = '*TITLE* ' + result[i].title + '\n' + '*POEM* \n' + result[i].content + '\n\n';
-            }
-	     
-	     try{
-	        const result = app.client.chat.postMessage({
-		    token: process.env.TOKEN,
-		    channel: 'D01F46BL5QE',
-		    text: "Random Poem ...",
-		    attachments:'[{"color": "#3AA3E3","attachment_type": "default","text":"'+ returnPoem +'"}]',			
-		});
-	     }catch (error) {
-	    return res.json({
-		fulfillmentText: 'Could not get results at this time',
-		source: 'Poem'
-		})
-	  }   
-       })
-        .catch(function (err) {
-            //logError(err, req.body.originalDetectIntentRequest.payload.data.event.user, 'Poem', 'poemHandler');
-            console.log(err);
-        });
-	
-
-}
 /***  Excuses Handler Function ***/
-
 function excuseHandler(req, res, next){
 	var excuses = ["I won't be coming to work today because I'm going to take a nap!",
         "I won't be coming to work today because I am on a quest for the Holy Grail.",
@@ -1120,7 +865,7 @@ function excuseHandler(req, res, next){
 	try{
 	const result = app.client.chat.postMessage({
 				      // The token you used to initialize your app
-				      token: process.env.TOKEN,
+				      token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
 				      channel: 'D01F46BL5QE',	  
 				      text:'Excuses for not going to work ...',					  
 				      attachments:'[{"color": "#3AA3E3","text":"'+ excuses[index] +'"}]',					  
@@ -1136,58 +881,125 @@ function excuseHandler(req, res, next){
 	
 }
 
-/**** speeding execuses Handler Function ***/
-function speedingExcuseHandler(req, res, next){
-	var pExcuses = ["I'm sorry officer. I know I was speeding but I thought you wanted to race.",
-        "I'm sorry officer. I know I was speeding but I need to get my kid to the hospital. His nose implants are acting up and it wouldn't be good if my husband saw him like this. Then he would know that he isn't his son. Now, we don't want that to happen do we?",
-        "I'm sorry officer. I know I was speeding but I just couldn't believe it wasn't butter. I just HAVE to see for my self.",
-        "I'm sorry officer. I know I was speeding but to be honest, I don't think you were going the speed limit either.",
-        "I'm sorry officer. I know I was speeding but I stole this car.",
-        "I'm sorry officer. I know I was speeding but I thought you had to be in relatively good physical shape to be a police officer.",
-        "I'm sorry officer. I know I was speeding but how can I convince you otherwise?",
-        "I'm sorry officer. I know I was speeding but I know you were waiting for me so I got here as fast as I could!",
-        "I'm sorry officer. I know I was speeding but I am stunt driver and we are filming a movie!",
-        "I'm sorry officer. I know I was speeding but take some money. How about you go get yourself something nice.",
-        "I'm sorry officer. I know I was speeding but you see, I spotted you coming and knew if you caught up you'd see I was drinking. So I had to speed to try and out run you.",
-        "I'm sorry officer. I know I was speeding but I'm being stalked by 3 FBI cars and I'm trying to run away!",
-        "I'm sorry officer. I know I was speeding but I'VE SEEN YOU BEFORE! Aren't you in The Village People?",
-        "I'm sorry officer. I know I was speeding but I didn't want to be late for church.",
-        "I'm sorry officer. I know I was speeding but I was going cuckoo for Coco puffs!",
-        "I'm sorry officer. I know I was speeding but I'm a pregnant man!",
-        "I'm sorry officer. I know I was speeding but there was a giant anaconda chasing me!",
-        "I'm sorry officer. I know I was speeding but OH MY, aren't you a sexy officer?",
-        "'m sorry officer. I know I was speeding but all the signs say 81! Apparently that was the route number...",
-        "I'm sorry officer. I know I was speeding but my doctor gave me the wrong meds.",
-        "I'm sorry officer. I know I was speeding but I get 10 extra in the fast lane.",
-        "I'm sorry officer. I know I was speeding but my accident-prone fiance is home alone.",
-        "I'm sorry officer. I know I was speeding but I ran out of lip gloss!",
-        "I'm sorry officer. I know I was speeding but I had passed out after seeing flashing lights which I believed to be UFOs in the distance. The flash of the camera brought me round from my trance.",
-        "I'm sorry officer. I know I was speeding but I have to get home in time for Ugly Betty!",
-        "I'm sorry officer. I know I was speeding but WOW, officer, is that a V8? She looks nice, bets she goes and handles well, mind if take a look, please?",
-        "I'm sorry officer. I know I was speeding but the limit was not clearly posted.",
-        "I'm sorry officer. I know I was speeding but I am color blind and I thought that the speeding sign was the blue one!",
-        "I'm sorry officer. I know I was speeding but I have to get ice cream before the store closes!",
-        "I'm sorry officer. I know I was speeding but I have to get home quickly I left the stove on!",
-        "I'm sorry officer. I know I was speeding but I had a piece of jerky fall under the gas petal and I was trying to get it with my foot."
-    ];
-    var pIndex = Math.random() * (30 - 0) + 0;
-    var index = Math.round(pIndex);
-    try{
-	const result = app.client.chat.postMessage({
-				      // The token you used to initialize your app
-				      token: process.env.TOKEN,
-				      channel: 'D01F46BL5QE',	  
-				      text:'Excuses for speeding...',					  
-				      attachments:'[{"color": "#3AA3E3","text":"'+ pExcuses[index] +'"}]',					  
-				    });
+/*** Poem Handler Function ***/
+function poemHandler(req,res,next){
+
+ var options = {
+        uri: 'https://www.poemist.com/api/v1/randompoems',
+        method: 'GET',
+        json: true,
+        headers: {
+            "Accept": "application/json"
+        }
+    };
+	
+     return rp(options)
+        .then(result => {
+            var returnPoem = '';
+
+            for (var i = 0; i < result.length; i++) {
+                returnPoem = '*TITLE* ' + result[i].title + '\n' + '*POEM* \n' + result[i].content + '\n\n';
+            }
+	     
+	     try{
+	        const result = app.client.chat.postMessage({
+		    token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		    channel:'D01F46BL5QE',
+		    text: "Random Poem ...",
+		    attachments:'[{"color": "#3AA3E3","attachment_type": "default","text":"'+ returnPoem +'"}]',			
+		});
+	     }catch (error) {
+	    return res.json({
+		fulfillmentText: 'Could not get results at this time',
+		source: 'Poem'
+		})
+	  }   
+       })
+        .catch(function (err) {
+           
+            console.log(err);
+        });
+	
+
+}
+/*** my Test Handler Function ***/
+function mytestHandler(req, res, next){
+
+	try{
+		const result = app.client.chat.postMessage({
+		token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		channel:'D01F46BL5QE',
+		text: "",
+		attachments:'[{"color":"#3AA3E3","blocks":[{"type":"section","text":{"type":"mrkdwn","text":"You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"}},{"type":"section","fields":[{"type":"mrkdwn","text":"\*Type:*\nComputer (laptop)"},{"type":"mrkdwn","text":"*When:*\nSubmitted Aut 10"},{"type":"mrkdwn","text":"*Last Update:*\nMar 10, 2015 (3 years, 5 months)"},{"type":"mrkdwn","text":"*Reason:*\nAll vowel keys aren\'t working."},{"type":"mrkdwn","text":"*Specs:*\nCheetah Pro 15 - Fast, really fast"}]},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","emoji":true,"text":"Approve"},"value":"click_me_123"},{"type":"button","text":{"type":"plain_text","emoji":true,"text":"Deny"},"value":"click_me_123"}]}]}]'
+		});
 		console.log(result);
-					
-	 }catch (error) {
+	    }catch (error) {
+	    return res.json({
+		fulfillmentText: 'Could not get results at this time',
+		source: 'MyTest'
+		})
+	  }  
+
+
+}
+
+/****  Incident Management Handler Function ***/
+function incidentMgtHandler(req,res,next){	
+	try {	 
+	   // Call the chat.postMessage method using the built-in WebClient
+	    const result = app.client.chat.postMessage({
+	      // The token you used to initialize your app
+	      token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	      channel: 'D01F46BL5QE',	  
+	      text:'Incident Management (IM)',	  		 
+	      attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Incident Management Resources from ServiceNow below ..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Outage Email"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article_view&sys_kb_id=3f87de47dbdef240a035f97e0f9619d5","style":"primary"},{"type":"button","text":{"type":"plain_text","text":"Run an Outage"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article&sys_id=9ec9d821db7dd7007deefb5aaf961944","style":"primary"},{"type":"button","text":{"type":"plain_text","text":"IM"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article&sys_id=5b256931dbcaa3c0c4c9f06e0f9619fd","style":"primary"}]}]}]', 
+	    });	   
+	
+		return res.json({});
+	  }
+	  catch (error) {
 	    return res.json({
 			fulfillmentText: 'Could not get results at this time',
-			source: 'PExcuses'
+			source: 'IncidentMgt'
 		})
 	  }
+	
+}
+
+/*** Joke2Handler Handler Function ***/
+function  joke2Handler(req,res,next){
+https.get(
+		'https://corporatebs-generator.sameerkumar.website/',
+		responseFromAPI => {
+			let completeResponse = ''
+			responseFromAPI.on('data', chunk => {
+				completeResponse += chunk
+			})
+			responseFromAPI.on('end', () => {
+			
+				const msg = JSON.parse(completeResponse);
+				// Call the chat.postMessage method using the built-in WebClient
+				    const result = app.client.chat.postMessage({
+					      // The token you used to initialize your app
+					      token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+					      channel:'D01F46BL5QE',	  
+					      text:'Information Technology Joke',					  
+					      attachments:'[{"color":"#3AA3E3","text":"'+ msg.phrase +'"}]',					 
+				    });
+
+			    // Print result, which includes information about the message (like TS)
+			    console.log(result);
+			    return res.json({});
+				
+			})
+		},
+		error => {
+			return res.json({
+				fulfillmentText: 'Could not get results at this time',
+				source: 'Joke2Handler'
+			})
+		}
+	)
 }
 
 /**** Lawyer Joke Handler Function ***/
@@ -1285,15 +1097,14 @@ function lawyerJokesHandler(req,res,next){
     var index = Math.round(pIndex);
 	 
 	 try{
-	const result = app.client.chat.postMessage({
-				      // The token you used to initialize your app
-				      token: process.env.TOKEN,
-				      channel: 'D01F46BL5QE',	  
-					  //text:'Hello world :tada:',
-					    text:'Lawyer joke...',					  
-				       attachments:'[{"color": "#3AA3E3","text":"'+ lJokes[index] +'"}]',					  
-				    });
-					 console.log(result);
+		const result = app.client.chat.postMessage({
+		      // The token you used to initialize your app
+		      token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+		      channel: 'D01F46BL5QE',					  
+		      text:'Lawyer joke...',					  
+		      attachments:'[{"color": "#3AA3E3","text":"'+ lJokes[index] +'"}]',					  
+	   });
+	   console.log(result);
 					
 	 }catch (error) {
 	    return res.json({
@@ -1304,59 +1115,16 @@ function lawyerJokesHandler(req,res,next){
 	
 }
 
-/*** Joke2Handler Handler Function ***/
-function  joke2Handler(req,res,next){
-https.get(
-		'https://corporatebs-generator.sameerkumar.website/',
-		responseFromAPI => {
-			let completeResponse = ''
-			responseFromAPI.on('data', chunk => {
-				completeResponse += chunk
-			})
-			responseFromAPI.on('end', () => {
-				
-				console.log(completeResponse);
-				
-				//const mymath = JSON.parse(completeResponse.text);
-				
-				const msg = JSON.parse(completeResponse);			
-				 
-				    // Call the chat.postMessage method using the built-in WebClient
-				    const result = app.client.chat.postMessage({
-				      // The token you used to initialize your app
-				      token: process.env.TOKEN,
-				      channel: 'D01F46BL5QE',	  
-					  //text:'Hello world :tada:',
-					    text:'Information Technology Joke',					  
-				            attachments:'[{"color":"#3AA3E3","text":"'+ msg.phrase +'"}]',					 
-				    });
-
-				    // Print result, which includes information about the message (like TS)
-				    console.log(result);
-				    return res.json({});
-				
-			})
-		},
-		error => {
-			return res.json({
-				fulfillmentText: 'Could not get results at this time',
-				source: 'Joke2Handler'
-			})
-		}
-	)
-}
-
-
-/****  Incident Management Handler Function ***/
-function incidentMgtHandler(req,res,next){	
+/**** orderCafeteriaHandler handler function ***/
+function orderCafeteriaHandler(req,res,next){	
 	try {	 
 	   // Call the chat.postMessage method using the built-in WebClient
 	    const result = app.client.chat.postMessage({
 	      // The token you used to initialize your app
-	      token: process.env.TOKEN,
-	      channel: 'D01F46BL5QE',	  
-	      text:'Incident Management (IM)',	  		 
-	      attachments:'[{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"Incident Management Resources from ServiceNow below ..."}},{"type":"actions","elements":[{"type":"button","text":{"type":"plain_text","text":"Outage Email"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article_view&sys_kb_id=3f87de47dbdef240a035f97e0f9619d5","style":"primary"},{"type":"button","text":{"type":"plain_text","text":"Run an Outage"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article&sys_id=9ec9d821db7dd7007deefb5aaf961944","style":"primary"},{"type":"button","text":{"type":"plain_text","text":"IM"},"url":"https://freedomfinancialnetwork.service-now.com/sp?id=kb_article&sys_id=5b256931dbcaa3c0c4c9f06e0f9619fd","style":"primary"}]}]}]', 
+	      token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	      channel:'D01F46BL5QE',	  
+	      text:'',	  		 
+	      attachments:'[{"color": "#f2c744","blocks":[{"type": "section","text": {"type": "mrkdwn","text": "*Order Food Online from the Rio 2 Cafeteria*"}},{"type": "actions","elements": [{"type": "button","text": {"type": "plain_text","emoji": true,"text": "Order Food"},"url": "https://orders.freedomfinancialcafe.com","style": "primary","value": "click_do_nothing"}]}]}]', 
 	    });
 
 	    // Print result, which includes information about the message (like TS)
@@ -1366,26 +1134,44 @@ function incidentMgtHandler(req,res,next){
 	  catch (error) {
 	    return res.json({
 			fulfillmentText: 'Could not get results at this time',
-			source: 'IncidentMgt'
+			source: 'orderCafeteria'
 		})
 	  }
-	
 }
 
-
-/**** orderCafeteriaHandler handler function ***/
-function orderCafeteriaHandler(req,res,next){	
+/*** help Handler functions **/
+function helpHandler(req,res,next){
+	try{
+	     const result = app.client.chat.postMessage({
+	      // The token you used to initialize your app
+	      token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
+	      channel: 'D01F46BL5QE',	  
+	      text:'HELP...',	  		 
+	      attachments:'[{"color": "#3AA3E3","attachment_type": "default","text":"*Order Food Rio 1 Cafeteria*\nType any of the following:\nfood\nhungry\norder food\norder food cafeteria\n\n*FDR Intake Requests*\nType any of the following:\nfdr intake\nintake\n\n*View Franklin Statistics and Metrics*\nType: stats\n\n*Submit an idea*\nType: bright idea\n\n*View My Asigned JIRA Tasks*\nType:\nmy tasks\n\n*Project Status*\nType: status of [any part of the project title]\n\n*Status of All Projects*\nType any of the following:\ntop 10\nall projects\njira project status\ntop it projects\n\n*People Lookup*\nType: who is first lastname\nwho is lastname\n\n*Salesforce Knowledge Search*\nType any of the following:\n sf\nsf [key words to search for]\n\n*Search Knowledge Articles*\nType any of the following:\nsearch for [some key words to search for]\nsearch [key words to search for]\n\n*ServiceNow Knowledge Search (same search used in SNOW)*\nType any of the following:\nknowledge [keywords to search]\nkb [keywords to search]\nkb\n\n*Create Idea*\nType the following:\n*Updated*\n/idea\n\n*ServiceNow* Type the following:\n servicenow\nservicenow stats\n\n*Twilio SMS delivered today, by hour* you can type the following:\nTwilio\nsms stats\nGive me the twilio stats\n\n*Weather*\nTempe weather\nSan Mateo weather\n\n*For weather you can type the following*: \nweather in [city]\ncurrent weather\nwhat is weather in tempe, az\n\n*CCP Network Monitor Map* by typing the following:\nccp network map\nproduction alarms\nNetwork status\n\n*Okta status* type the following:\nokta\n\n*View the uncleared payments process* type:\nuncleared\nuncleared payments\n\n*Jokes*:\nType any of the following:\njoke\ndo you know any jokes\ntell me a joke\nj2 - IT jokes\nlj - lawyer jokes\n\n*Get Stock Quotes*\nType any of the following:\nquote: [stock symbol here]\nstock: [stock symbol here]\n\n*Current Time - Multiple time zones*:\nType any of the following:\ntime now\ntime\ndate\n\n*Add word to FFN Dictionary*\nType the following:\n\ addword\nOr use search below and click the *Add New Word* button to add new word.\n\n*FFN Dictionary Search*\nType any of the following:\ndefine: [word or acronym] or define [word or acronym]\nlookup: [word or acronym] or lookup [word or acronym]\nmeaning: [word or acronym] or meaning [word or acronym]\nwhat is: [word or acronym] or what is [word or acronym]\n\n*List All Entries in FFN Dictionary*\nType any of the following\nall acronyms\nall words\nshow dictionary\n\n*eBook Search*:\nType any of the following:\nbook: [any part of title of book or an author]\nsearch book: [any part of title of book or an author]\n","fallback": "detailed help info"}]',
+		 
+	    });
+	}
+	catch(error){
+		 return res.json({
+			fulfillmentText: 'Could not get results at this time',
+			source: 'HELP'
+		})
+	}
+}
+    
+/*** Jira NewIdea  Handler Functions ***/
+function addNewIdeaWithName(req, res, next) {
 	try {	 
 	   // Call the chat.postMessage method using the built-in WebClient
 	    const result = app.client.chat.postMessage({
 	      // The token you used to initialize your app
-	      token: process.env.TOKEN,
+	      token: 'xoxb-1514190775910-1517858624597-MJAC5I0Iyu3TVICr9kVPABVz',
 	      channel: 'D01F46BL5QE',	  
-		  text:'',	  		 
-		  attachments:'[{"color": "#f2c744","blocks":[{"type": "section","text": {"type": "mrkdwn","text": "*Order Food Online from the Rio 2 Cafeteria*"}},{"type": "actions","elements": [{"type": "button","text": {"type": "plain_text","emoji": true,"text": "Order Food"},"url": "https://orders.freedomfinancialcafe.com","style": "primary","value": "click_do_nothing"}]}]}]', 
+	      text:'Note: Idea has changed...',	  		 
+	      attachments:'[{"color": "#3AA3E3","attachment_type": "default","text":"Idea has been replaced with a slash command and is accessable by typing\n/idea","fallback": "Idea has been replaced with a slash command and is accessable by typing\n/idea"}]',
+		 
 	    });
-
-	    // Print result, which includes information about the message (like TS)
+    
 	    //console.log(result);
 		return res.json({});
 	  }
@@ -1395,6 +1181,7 @@ function orderCafeteriaHandler(req,res,next){
 			source: 'JIRA-NewIdea'
 		})
 	  }
+
 }
 
 /*** buzzword handler function ***/
@@ -1414,36 +1201,12 @@ function buzzWordHandler(req, res, next) {
 				
 				const msg = JSON.parse(completeResponse);
 
-				var dataToSend ;
+				let dataToSend ;
 				dataToSend = `Cool Corporate Buzz Word: ${msg.phrase}`
-				console.log(dataToSend);
-				 
-				    // Call the chat.postMessage method using the built-in WebClient
-				    const result = app.client.chat.postMessage({
-				      // The token you used to initialize your app
-				      token: process.env.TOKEN,
-				      channel: 'D01F46BL5QE',	  
-					  //text:'Hello world :tada:',
-					    text:'',
-					  //attachments:'[{"color": "#3AA3E3","attachment_type": "default","pretext": "pre-hello","text": "Cool Corporate Buzz Word...""}]'
-					  //as_user:true,
-				          attachments:'[{"color": "#3AA3E3","text":"'+ dataToSend +'"}]',
-					  //blocks:'[{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]',
-					  //icon_emoji:':chart_with_upwards_trend:'
-				      // You could also use a blocks[] array to send richer content
-				    });
-
-				    // Print result, which includes information about the message (like TS)
-				    console.log(result);
-				    return res.json({});
-				 
-				
-				/*
 				return res.json({
 					fulfillmentText: dataToSend,
 					source: 'BuzzWord'
 				})
-				*/
 			})
 		},
 		error => {
@@ -1477,30 +1240,10 @@ function mathFactsHandler(req, res, next) {
 				let dataToSend ;
 				dataToSend = `The Question is ${mymath}`
 
-				// Call the chat.postMessage method using the built-in WebClient
-				    const result = app.client.chat.postMessage({
-				      // The token you used to initialize your app
-				      token: process.env.TOKEN,
-				      channel: 'D01F46BL5QE',	  
-					  //text:'Hello world :tada:',
-					    text:'',
-					  //attachments:'[{"color": "#3AA3E3","attachment_type": "default","pretext": "pre-hello","text": "Cool Corporate Buzz Word...""}]'
-					  //as_user:true,
-				          attachments:'[{"color": "#3AA3E3","text":"'+ dataToSend +'"}]',
-					  //blocks:'[{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]',
-					  //icon_emoji:':chart_with_upwards_trend:'
-				      // You could also use a blocks[] array to send richer content
-				    });
-
-				    // Print result, which includes information about the message (like TS)
-				    //console.log(result);
-				    return res.json({});
-				/*
 				return res.json({
 					fulfillmentText: dataToSend,
 					source: 'MathFacts'
 				})
-				*/
 			})
 		},
 		error => {
@@ -1511,99 +1254,6 @@ function mathFactsHandler(req, res, next) {
 		}
 	)
 		
-}
-
-/*** Jira NewIdea  Handler Functions ***/
-function addNewIdeaWithName(req, res, next) {
-	try {	 
-	   // Call the chat.postMessage method using the built-in WebClient
-	    const result = app.client.chat.postMessage({
-	      // The token you used to initialize your app
-	      token: process.env.TOKEN,
-	      channel: 'D01F46BL5QE',	  
-		  text:'Note: Idea has changed...',	  		 
-		  attachments:'[{"color": "#3AA3E3","attachment_type": "default","text":"Idea has been replaced with a slash command and is accessable by typing\n/idea","fallback": "Idea has been replaced with a slash command and is accessable by typing\n/idea"}]',
-		 // blocks:'[{"fallback": "Idea has been replaced with a slash command and is accessable by typing\n/idea"}]',  
-		 
-	    });
-
-	    // Print result, which includes information about the message (like TS)
-	    //console.log(result);
-		return res.json({});
-	  }
-	  catch (error) {
-	    return res.json({
-			fulfillmentText: 'Could not get results at this time',
-			source: 'JIRA-NewIdea'
-		})
-	  }
-
-}
-
-/*** help Handler functions **/
-function helpHandler(req,res,next){
-	try{
-	     const result = app.client.chat.postMessage({
-	      // The token you used to initialize your app
-	      token: process.env.TOKEN,
-	      channel: 'D01F46BL5QE',	  
-		  text:'HELP...',	  		 
-		  attachments:'[{"color": "#3AA3E3","attachment_type": "default","text":"*Order Food Rio 1 Cafeteria*\nType any of the following:\nfood\nhungry\norder food\norder food cafeteria\n\n*FDR Intake Requests*\nType any of the following:\nfdr intake\nintake\n\n*View Franklin Statistics and Metrics*\nType: stats\n\n*Submit an idea*\nType: bright idea\n\n*View My Asigned JIRA Tasks*\nType:\nmy tasks\n\n*Project Status*\nType: status of [any part of the project title]\n\n*Status of All Projects*\nType any of the following:\ntop 10\nall projects\njira project status\ntop it projects\n\n*People Lookup*\nType: who is first lastname\nwho is lastname\n\n*Salesforce Knowledge Search*\nType any of the following:\n sf\nsf [key words to search for]\n\n*Search Knowledge Articles*\nType any of the following:\nsearch for [some key words to search for]\nsearch [key words to search for]\n\n*ServiceNow Knowledge Search (same search used in SNOW)*\nType any of the following:\nknowledge [keywords to search]\nkb [keywords to search]\nkb\n\n*Create Idea*\nType the following:\n*Updated*\n/idea\n\n*ServiceNow* Type the following:\n servicenow\nservicenow stats\n\n*Twilio SMS delivered today, by hour* you can type the following:\nTwilio\nsms stats\nGive me the twilio stats\n\n*Weather*\nTempe weather\nSan Mateo weather\n\n*For weather you can type the following*: \nweather in [city]\ncurrent weather\nwhat is weather in tempe, az\n\n*CCP Network Monitor Map* by typing the following:\nccp network map\nproduction alarms\nNetwork status\n\n*Okta status* type the following:\nokta\n\n*View the uncleared payments process* type:\nuncleared\nuncleared payments\n\n*Jokes*:\nType any of the following:\njoke\ndo you know any jokes\ntell me a joke\nj2 - IT jokes\nlj - lawyer jokes\n\n*Get Stock Quotes*\nType any of the following:\nquote: [stock symbol here]\nstock: [stock symbol here]\n\n*Current Time - Multiple time zones*:\nType any of the following:\ntime now\ntime\ndate\n\n*Add word to FFN Dictionary*\nType the following:\n\ addword\nOr use search below and click the *Add New Word* button to add new word.\n\n*FFN Dictionary Search*\nType any of the following:\ndefine: [word or acronym] or define [word or acronym]\nlookup: [word or acronym] or lookup [word or acronym]\nmeaning: [word or acronym] or meaning [word or acronym]\nwhat is: [word or acronym] or what is [word or acronym]\n\n*List All Entries in FFN Dictionary*\nType any of the following\nall acronyms\nall words\nshow dictionary\n\n*eBook Search*:\nType any of the following:\nbook: [any part of title of book or an author]\nsearch book: [any part of title of book or an author]\n","fallback": "detailed help info"}]',
-		 // blocks:'[{"fallback": "Idea has been replaced with a slash command and is accessable by typing\n/idea"}]',  
-		 
-	    });
-	}
-	catch(error){
-		 return res.json({
-			fulfillmentText: 'Could not get results at this time',
-			source: 'HELP'
-		})
-	}
-}
-
-/*** slack Message Functions ***/
-function sendSlackMessage (webhookURL, messageBody) {
-  // make sure the incoming message body can be parsed into valid JSON
-  try {
-    messageBody = JSON.stringify(messageBody);
-  } catch (e) {
-    throw new Error('Failed to stringify messageBody', e);
-  }
-
-  // Promisify the https.request
-  return new Promise((resolve, reject) => {
-    // general request options, we defined that it's a POST request and content is JSON
-    const requestOptions = {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    // actual request
-    const req = https.request(webhookURL, requestOptions, (res) => {
-      let response = '';
-
-
-      res.on('data', (d) => {
-        response += d;
-      });
-
-      // response finished, resolve the promise with data
-      res.on('end', () => {
-        resolve(response);
-      })
-    });
-
-    // there was an error, reject the promise
-    req.on('error', (e) => {
-      reject(e);
-    });
-
-    // send our message body (was parsed to JSON beforehand)
-    req.write(messageBody);
-    req.end();
-  });
 }
 
 
