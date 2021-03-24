@@ -180,6 +180,10 @@ router.post('/', function (req, res, next) {
 /**** backlog Issue Create Handler function **/
 function backlogIssueCreateHandler(req,res,next){	
 	console.log('backlogIssueCreateHandler called!');
+	
+	console.log(req);
+	
+	/*
 	var options = {
         uri:'https://droisys.backlog.com/api/v2/issues?projectId=54596&summary=Six Issue&description=this is Six issue created by apicall&issueTypeId=230973&startDate=2021-03-24&priorityId=1&assigneeId=125045&apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
 		method: 'POST',
@@ -206,6 +210,7 @@ function backlogIssueCreateHandler(req,res,next){
 			} 
 			*/
 		});
+*/
 }
 
 
