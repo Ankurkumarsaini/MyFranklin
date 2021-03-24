@@ -195,7 +195,7 @@ function backlogIssueCreateHandler(req,res,next){
     return rp(options)
         .then(response => {
 			console.log(response);
-			 /*
+			 
 			 try 
 			    {
 				const result = app.client.chat.postMessage({
@@ -208,7 +208,7 @@ function backlogIssueCreateHandler(req,res,next){
 
 				console.log(error);
 			} 
-			*/
+			
 		});
 */
 }
