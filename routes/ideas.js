@@ -161,6 +161,9 @@ router.post('/', function (req, res, next) {
                 break;
 	case "BacklogOpenIssueList":               
                 backlogOpenIssueListHandler(req, res, next);
+                break;
+	case "BacklogCreateIssue":               
+                backlogIssueCreateHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -172,6 +175,35 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/**** backlog Issue Create Handler function **/
+function backlogIssueCreateHandler(){	
+	var options = {
+        uri:'https://droisys.backlog.com/api/v2/issues?projectId=54596&summary=Six Issue&description=this is Six issue created by apicall&issueTypeId=230973&startDate=2021-03-24&priorityId=1&assigneeId=125045&apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
+		method: 'POST',
+        json: true,
+        headers: {
+            "Accept": 'text/plain'
+        }
+    };
+    return rp(options)
+        .then(response => {
+			console.log(response);
+			 try 
+			    {
+				const result = app.client.chat.postMessage({
+				token: process.env.TOKEN,
+			        channel: 'D01F46BL5QE',
+				text:"*Backlog Create Issue*",
+				attachments:'[{"color": "#3AA3E3","text":"Backlog Issue created Successfully!"}]',					
+				  });
+			}catch (error) {
+
+				console.log(error);
+			} 
+		});
+}
 
 
 /*** Backlog Open Issue listing Handler Function ***/
