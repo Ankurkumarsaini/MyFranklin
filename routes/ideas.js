@@ -162,7 +162,7 @@ router.post('/', function (req, res, next) {
 	case "BacklogOpenIssueList":               
                 backlogOpenIssueListHandler(req, res, next);
                 break;
-	case "BacklogCreateIssue":               
+	case "BacklogIssueCreate":               
                 backlogIssueCreateHandler(req, res, next);
                 break;		
 		default:
