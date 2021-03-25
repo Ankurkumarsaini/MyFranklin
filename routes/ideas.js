@@ -206,6 +206,7 @@ function backlogGetIssueInfoHandler(req, res, next){
 	 text +='\n*\Summary*\:'+ response.summary;
 	 text +='\n*\Description*\:'+ response.description;
 	 text +='\n*\Status*\:'+ response.status.name;
+	 text +='\n*\Priority*\:'+ response.priority.name;
 	 text +='\n*\Assignee*\ :'+ response.assignee.name;
 	 text +='\n*\Create By*\ :'+ response.createdUser.name;
 	 text +='\n\n';	
