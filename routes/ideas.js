@@ -200,14 +200,15 @@ function backlogIssueCreateHandler(req,res,next){
     };
     return rp(options)
         .then(response => {
-			console.log(response);	               
+			console.log(response);
+	               var TicketNo=response.issueKey;
 			 try 
 			    {			        
 				const result = app.client.chat.postMessage({
 				token: process.env.TOKEN,
 			        channel: 'D01F46BL5QE',
 				text:"*Backlog Ticket Created Successfully!*",
-				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No is :-'+ response.issueKey +'"}]',					
+				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No is :-'+ TicketNo +'"}]',					
 				  });
 			}catch (error) {
 
