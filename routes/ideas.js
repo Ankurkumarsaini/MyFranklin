@@ -167,7 +167,10 @@ router.post('/', function (req, res, next) {
                 break;
 	case "BacklogDeleteIssue":               
                 backlogDeleteIssueHandler(req, res, next);
-                break;		
+                break;	
+	case "BacklogGetIssueInfo":
+		backlogGetIssueInfoHandler(req, res, next);
+                break;	
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -179,6 +182,49 @@ router.post('/', function (req, res, next) {
     }
 });
 
+
+/*** Backlog ticket info handler ****/
+
+function backlogGetIssueInfoHandler(req, res, next){
+   var issueNo=req.body.queryResult.parameters.ticketNo;	
+   var options = {
+        uri: 'https://droisys.backlog.com/api/v2/issues/'+ issueNo +'?apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
+        method: 'GET',
+        json: true,
+        headers: {
+            "Accept": 'text/plain'
+        }
+    };
+
+    return rp(options)
+        .then(response => {
+	    
+	 var text='';
+	for(var i=0;i<response.length;i++){								 
+	 text +='\n*\Issue No*\: '+ response[i].issueKey;
+	 text +='\n*\Summary*\:'+ response[i].summary;
+	 text +='\n*\Description*\:'+ response[i].description;
+	 text +='\n*\Status*\:'+ response[i].status.name;
+	 text +='\n*\Assignee*\ :'+ response[i].assignee.name;
+	 text +='\n*\Create By*\ :'+ response[i].createdUser.name;
+	 text +='\n\n';	
+		
+		try 
+		    {
+			const result = app.client.chat.postMessage({
+			token: process.env.TOKEN,
+			channel: 'D01F46BL5QE',
+			text:"*List of Open Issue*",
+			attachments:'[{"color": "#3AA3E3","text":"' +  text + '"}]',					
+			  });
+		}catch (error) {
+
+			console.log(error);
+		}
+	    
+	    
+    });
+}
 
 /**** backlog Delete Issue Handler function ***/
 
