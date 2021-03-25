@@ -204,18 +204,20 @@ function backlogIssueCreateHandler(req,res,next){
 	                var datalength=response.length;
 	                //var backlogticketNo=response[0].issueKey;
 	                //console.log(response[0].issueKey); 
-	                console.log(response[0]['issueKey']);
+	               // console.log(response[0]['issueKey']);
+	    console.log(response[0].id);
+	               
 	    
 			 
 			 try 
 			    {
-			        var datalength=response.length;
-	                        var backlogticketNo=response[0]['issueKey'];
+			        //var datalength=response.length;
+	                        //var backlogticketNo=response[0]['issueKey'];
 				const result = app.client.chat.postMessage({
 				token: process.env.TOKEN,
 			        channel: 'D01F46BL5QE',
 				text:"*Backlog Ticket Created Successfully!*",
-				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No is :-'+backlogticketNo+'"}]',					
+				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No is :-"}]',					
 				  });
 			}catch (error) {
 
