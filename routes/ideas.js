@@ -181,7 +181,9 @@ router.post('/', function (req, res, next) {
 function backlogIssueCreateHandler(req,res,next){	
 	console.log('backlogIssueCreateHandler called!');
 	
-	console.log(req.body.originalDetectIntentRequest.payload.data);
+	//console.log(req.body.originalDetectIntentRequest.payload.data);
+	
+	console.log(req.body.queryResult.parameters);
 	
 	//console.log(req);
 	
