@@ -208,6 +208,8 @@ function backlogGetIssueInfoHandler(req, res, next){
 	 text +='\n*\Assignee*\ :'+ response[i].assignee.name;
 	 text +='\n*\Create By*\ :'+ response[i].createdUser.name;
 	 text +='\n\n';	
+	
+	 }	
 		
 		try 
 		    {
