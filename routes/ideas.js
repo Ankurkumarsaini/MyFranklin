@@ -164,6 +164,9 @@ router.post('/', function (req, res, next) {
                 break;
 	case "BacklogIssueCreate":               
                 backlogIssueCreateHandler(req, res, next);
+                break;
+	case "BacklogDeleteIssue":               
+                backlogDeleteIssueHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -175,6 +178,16 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/**** backlog Delete Issue Handler function ***/
+
+function backlogDeleteIssueHandler(req,res,next){
+	console.log('backlogIssueCreateHandler called!');
+	var Ticketno=req.body.queryResult.parameters.TicketNO;
+	console.log(Ticketno);
+	
+}
 
 
 /**** backlog Issue Create Handler function **/
