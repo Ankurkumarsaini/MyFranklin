@@ -217,7 +217,7 @@ function backlogGetIssueInfoHandler(req, res, next){
 			const result = app.client.chat.postMessage({
 			token: process.env.TOKEN,
 			channel: 'D01F46BL5QE',
-			text:"*List of Open Issue*",
+			text:"*Below is the details of Issue '+response.issueKey+'*",
 			attachments:'[{"color": "#3AA3E3","text":"' +  text + '"}]',					
 			  });
 		}catch (error) {
