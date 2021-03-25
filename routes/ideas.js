@@ -189,7 +189,7 @@ function backlogDeleteIssueHandler(req,res,next){
 	
 	
        var options = {
-	uri:'https://droisys.backlog.com/api/v2/issues/'+ Ticketno +'?apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
+	uri:'https://droisys.backlog.com/api/v2/issues/'+ Ticketno +'?apiKey='+ process.env.BACKLOG_TOKEN,
 	method: 'DELETE',
         json: true,
         headers: {
@@ -264,7 +264,7 @@ function backlogIssueCreateHandler(req,res,next){
 function backlogOpenIssueListHandler(req, res, next){
 
 	var options = {
-        uri: 'https://droisys.backlog.com/api/v2/issues?projectId[]=33132&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
+        uri: 'https://droisys.backlog.com/api/v2/issues?projectId[]=54596&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
         method: 'GET',
         json: true,
         headers: {
