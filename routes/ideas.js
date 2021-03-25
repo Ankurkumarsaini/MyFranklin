@@ -190,8 +190,6 @@ function backlogDeleteIssueHandler(req,res,next){
 	
        var options = {
 	uri:'https://droisys.backlog.com/api/v2/issues/'+ Ticketno +'?apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
-		       
-       // uri:'https://droisys.backlog.com/api/v2/issues?projectId=54596&summary='+ summary +'&description='+ description +'&issueTypeId=230973&startDate=2021-03-24&priorityId=1&assigneeId=125045&apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
 	method: 'DELETE',
         json: true,
         headers: {
@@ -207,7 +205,7 @@ function backlogDeleteIssueHandler(req,res,next){
 				token: process.env.TOKEN,
 			        channel: 'D01F46BL5QE',
 				text:"*Backlog Ticket Deleted Successfully!*",
-				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No  :- *'+ Ticketno +'* Deleted from the Backlog Successfully "}]',					
+				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No  :- *'+ Ticketno +'* deleted from the backlog Successfully! "}]',					
 				  });
 			}catch (error) {
 
