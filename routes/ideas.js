@@ -207,7 +207,7 @@ function backlogDeleteIssueHandler(req,res,next){
 				token: process.env.TOKEN,
 			        channel: 'D01F46BL5QE',
 				text:"*Backlog Ticket Deleted Successfully!*",
-				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No  :-* '+ Ticketno +' * Deleted from the Backlog Successfully "}]',					
+				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No  :- *'+ Ticketno +'* Deleted from the Backlog Successfully "}]',					
 				  });
 			}catch (error) {
 
