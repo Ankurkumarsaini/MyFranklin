@@ -170,7 +170,10 @@ router.post('/', function (req, res, next) {
                 break;	
 	case "BacklogGetIssueInfo":
 		backlogGetIssueInfoHandler(req, res, next);
-                break;	
+                break;
+	case "BacklogChangeIssueStatus":
+		backlogChangeIssueStatusHandler(req, res, next);
+                break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
                 res.send("Your request wasn't found and has been logged. Thank you!");
@@ -183,8 +186,42 @@ router.post('/', function (req, res, next) {
 });
 
 
-/*** Backlog ticket info handler ****/
+/*** Backlog Ticket Status change ***/
+function backlogChangeIssueStatusHandler(req, res, next)
+{
+   var IssueNo=req.body.queryResult.parameters.TicketNo;
+   var Status = req.body.queryResult.parameters.status;	
+   var options = {       
+		uri:'https://droisys.backlog.com/api/v2/issues/'+ IssueNo +'?statusId='+ Status +'&assigneeId=125045&apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1', 
+		method: 'PATCH',
+        json: true,
+        headers: {
+            "Accept": 'text/plain'
+        }
+    };
 
+    return rp(options)
+        .then(response => {
+			 console.log(response);	
+	    
+	          try 
+		    {
+			const result = app.client.chat.postMessage({
+			token: process.env.TOKEN,
+			channel: 'D01F46BL5QE',
+			text:"*Issue Status Changed Successfully*",
+			attachments:'[{"color": "#3AA3E3","text":"Please type the get ticket info to see the ticket status "}]',					
+			  });
+		}catch (error) {
+
+			console.log(error);
+		}
+			
+		});	
+
+}
+
+/*** Backlog ticket info handler ****/
 function backlogGetIssueInfoHandler(req, res, next){
    var issueNo=req.body.queryResult.parameters.ticketNo;	
    var options = {
