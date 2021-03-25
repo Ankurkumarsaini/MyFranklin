@@ -394,7 +394,7 @@ function backlogOpenIssueListHandler(req, res, next){
 /*** backlog CLose Issue Count info Handler function **/
 function backlogCloseIssueHandler(req, res, next){
 	var options = {
-        uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=33132&assigneeId[]=125045&statusId[]=4&apiKey='+ process.env.BACKLOG_TOKEN,
+        uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=54596&assigneeId[]=125045&statusId[]=4&apiKey='+ process.env.BACKLOG_TOKEN,
         method: 'GET',
         json: true,
         headers: {
@@ -426,7 +426,7 @@ function backlogCloseIssueHandler(req, res, next){
 /***backlog Open Issue Count info handler function ****/
 function backlogOpenIssueHandler(req, res, next){
 	var options = {
-        uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=33132&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
+        uri: 'https://droisys.backlog.com/api/v2/issues/count?projectId[]=54596&assigneeId[]=125045&statusId[]=1&apiKey='+ process.env.BACKLOG_TOKEN,
         method: 'GET',
         json: true,
         headers: {
