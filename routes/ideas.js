@@ -203,9 +203,14 @@ function backlogIssueCreateHandler(req,res,next){
 			console.log(response);
 	                var datalength=response.length;
 	                var backlogticketNo=response[0].issueKey;
+	                console.log(response[0].issueKey); 
+	                console.log(response[0]['issueKey']);
+	    
 			 
 			 try 
 			    {
+			        var datalength=response.length;
+	                        var backlogticketNo=response[0]['issueKey'];
 				const result = app.client.chat.postMessage({
 				token: process.env.TOKEN,
 			        channel: 'D01F46BL5QE',
