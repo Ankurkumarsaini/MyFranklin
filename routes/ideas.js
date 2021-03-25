@@ -183,20 +183,49 @@ router.post('/', function (req, res, next) {
 /**** backlog Delete Issue Handler function ***/
 
 function backlogDeleteIssueHandler(req,res,next){
-	console.log('backlogIssueCreateHandler called!');
+	console.log('backlogDelete called!');
 	var Ticketno=req.body.queryResult.parameters.TicketNO;
 	console.log(Ticketno);
+	
+	
+       var options = {
+	uri:'https://droisys.backlog.com/api/v2/issues/'+ Ticketno +'?apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
+		       
+       // uri:'https://droisys.backlog.com/api/v2/issues?projectId=54596&summary='+ summary +'&description='+ description +'&issueTypeId=230973&startDate=2021-03-24&priorityId=1&assigneeId=125045&apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
+	method: 'DELETE',
+        json: true,
+        headers: {
+            "Accept": 'text/plain'
+        }
+    };
+    return rp(options)
+        .then(response => {			
+	              
+			 try 
+			    {			        
+				const result = app.client.chat.postMessage({
+				token: process.env.TOKEN,
+			        channel: 'D01F46BL5QE',
+				text:"*Backlog Ticket Deleted Successfully!*",
+				attachments:'[{"color": "#3AA3E3","text":"Your backlog Ticket No  :-* '+ Ticketno +' * Deleted from the Backlog Successfully "}]',					
+				  });
+			}catch (error) {
+
+				console.log(error);
+			} 
+			
+		});
+
+	
+	
 	
 }
 
 
 /**** backlog Issue Create Handler function **/
 function backlogIssueCreateHandler(req,res,next){	
-	console.log('backlogIssueCreateHandler called!');
-	
-	//console.log(req.body.originalDetectIntentRequest.payload.data);
-	
-	console.log(req.body.queryResult.parameters);
+	console.log('backlogIssueCreateHandler called!');	
+	//console.log(req.body.queryResult.parameters);
 	
 	//console.log(req);
 	var summary=req.body.queryResult.parameters.summary;
