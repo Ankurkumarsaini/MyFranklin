@@ -205,7 +205,8 @@ function backlogIssueCreateHandler(req,res,next){
 	                //var backlogticketNo=response[0].issueKey;
 	                //console.log(response[0].issueKey); 
 	               // console.log(response[0]['issueKey']);
-	    console.log(response[0].id);
+	    console.log(response.id);
+	    console.log(response.issueKey);
 	               
 	    
 			 
