@@ -202,8 +202,8 @@ function backlogIssueCreateHandler(req,res,next){
         .then(response => {
 			console.log(response);
 	                var datalength=response.length;
-	                var backlogticketNo=response[0].issueKey;
-	                console.log(response[0].issueKey); 
+	                //var backlogticketNo=response[0].issueKey;
+	                //console.log(response[0].issueKey); 
 	                console.log(response[0]['issueKey']);
 	    
 			 
