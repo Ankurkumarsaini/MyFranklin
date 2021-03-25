@@ -186,8 +186,10 @@ function backlogIssueCreateHandler(req,res,next){
 	console.log(req.body.queryResult.parameters);
 	
 	//console.log(req);
+	var summary=req.body.queryResult.parameters.summary;
+	var description=req.body.queryResult.parameters.description;
 	
-	/*
+	
 	var options = {
         uri:'https://droisys.backlog.com/api/v2/issues?projectId=54596&summary=Six Issue&description=this is Six issue created by apicall&issueTypeId=230973&startDate=2021-03-24&priorityId=1&assigneeId=125045&apiKey=FvvTozYphchipU5Si7O9qphvYjekCkBVHqHfjgSMoR5zZWPJ4qCq6AstXCHx1cc1',
 		method: 'POST',
@@ -205,7 +207,7 @@ function backlogIssueCreateHandler(req,res,next){
 				const result = app.client.chat.postMessage({
 				token: process.env.TOKEN,
 			        channel: 'D01F46BL5QE',
-				text:"*Backlog Create Issue*",
+				//text:"*Backlog Ticket Created Successfully!*",
 				attachments:'[{"color": "#3AA3E3","text":"Backlog Issue created Successfully!"}]',					
 				  });
 			}catch (error) {
@@ -214,7 +216,7 @@ function backlogIssueCreateHandler(req,res,next){
 			} 
 			
 		});
-*/
+
 }
 
 
