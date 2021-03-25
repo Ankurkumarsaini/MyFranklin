@@ -199,17 +199,18 @@ function backlogGetIssueInfoHandler(req, res, next){
     return rp(options)
         .then(response => {
 	    
-	 var text='';
-	for(var i=0;i<response.length;i++){								 
-	 text +='\n*\Issue No*\: '+ response[i].issueKey;
-	 text +='\n*\Summary*\:'+ response[i].summary;
-	 text +='\n*\Description*\:'+ response[i].description;
-	 text +='\n*\Status*\:'+ response[i].status.name;
-	 text +='\n*\Assignee*\ :'+ response[i].assignee.name;
-	 text +='\n*\Create By*\ :'+ response[i].createdUser.name;
+	    console.log(response);
+	    
+	 var text='';								 
+	 text +='\n*\Issue No*\: '+ response.issueKey;
+	 text +='\n*\Summary*\:'+ response.summary;
+	 text +='\n*\Description*\:'+ response.description;
+	 text +='\n*\Status*\:'+ response.status.name;
+	 text +='\n*\Assignee*\ :'+ response.assignee.name;
+	 text +='\n*\Create By*\ :'+ response.createdUser.name;
 	 text +='\n\n';	
 	
-	 }	
+	 	
 		
 		try 
 		    {
