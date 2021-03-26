@@ -22,7 +22,7 @@ const app = new App({
 
 router.post('/cx',function (req,res,next){
 console.log('request from google ES');	
-console.log(req.body.queryResult);
+console.log(req.body);
 });
 
 
