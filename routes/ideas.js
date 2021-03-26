@@ -22,9 +22,39 @@ const app = new App({
 
 router.post('/cx',function (req,res,next){
 console.log('request from google ES');	
-console.log(req.body);
+//console.log(req.body);
 var IntentName=req.body.intentInfo.displayName;
-	console.log('Intent Name:-'+IntentName);
+console.log('Intent Name:-'+IntentName);
+	
+	https.get(
+		'https://corporatebs-generator.sameerkumar.website/',
+		responseFromAPI => {
+			let completeResponse = ''
+			responseFromAPI.on('data', chunk => {
+				completeResponse += chunk
+			})
+			responseFromAPI.on('end', () => {
+				
+				console.log(completeResponse);				
+				const msg = JSON.parse(completeResponse);
+
+				var dataToSend ;
+				dataToSend = `Cool Corporate Buzz Word: ${msg.phrase}`
+				console.log(dataToSend);			
+				return res.json({
+					fulfillmentText: dataToSend,
+					source: 'BuzzWord'
+				})
+				
+			})
+		},
+		error => {
+			return res.json({
+				fulfillmentText: 'Could not get results at this time',
+				source: 'BuzzWord'
+			})
+		}
+	)
 });
 
 
