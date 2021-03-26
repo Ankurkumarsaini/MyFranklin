@@ -47,8 +47,8 @@ console.log('Intent Name:-'+IntentName);
 					source: 'BuzzWord'
 				})
 				*/
-				//return res.json({"fulfillmentMessages": [{"text": {"text": ["Text response from webhook"]}}]});
-				return res.json({"payload": {"google": {"expectUserResponse": true,"richResponse": {"items": [{"simpleResponse": {"textToSpeech": "this is a Google Assistant response"}}]}}}});
+				return res.send({"fulfillmentMessages": [{"text": {"text": ["Text response from webhook"]}}]});
+				//return res.json({"payload": {"google": {"expectUserResponse": true,"richResponse": {"items": [{"simpleResponse": {"textToSpeech": "this is a Google Assistant response"}}]}}}});
 				
 			})
 		},
