@@ -20,6 +20,11 @@ const app = new App({
 });
 
 
+router.post('/cx',function (req,res,next){
+console.log(req.body.queryResult);
+}
+
+
 router.post('/', function (req, res, next) {
 	
  console.log(req.body.queryResult);	
