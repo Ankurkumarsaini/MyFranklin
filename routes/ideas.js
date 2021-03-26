@@ -41,10 +41,13 @@ console.log('Intent Name:-'+IntentName);
 				var dataToSend ;
 				dataToSend = `Cool Corporate Buzz Word: ${msg.phrase}`
 				console.log(dataToSend);			
+				/*
 				return res.json({
 					fulfillmentText: dataToSend,
 					source: 'BuzzWord'
 				})
+				*/
+				return res.json({"fulfillmentMessages": [{"text": {"text": ["Text response from webhook"]}}]});
 				
 			})
 		},
