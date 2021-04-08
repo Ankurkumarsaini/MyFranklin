@@ -217,6 +217,9 @@ router.post('/', function (req, res, next) {
                 break;
 	case "BacklogChangeIssueStatus":
 		backlogChangeIssueStatusHandler(req, res, next);
+                break;	
+	case "JiraToDoIssue":
+		jirafetchtodoIssueHandler(req, res, next);
                 break;		
 		default:
                // logError("Unable to match intent. Received: " + intentName, req.body.originalDetectIntentRequest.payload.data.event.user, 'UNKNOWN', 'IDEA POST CALL');
@@ -228,6 +231,13 @@ router.post('/', function (req, res, next) {
         res.send(err);
     }
 });
+
+
+/*** jira code for fetching the to do issue ****/
+function jirafetchtodoIssueHandler(req, res, next){
+    console.log('jira fetch to do issue come here!');
+}
+
 
 
 /*** Backlog Ticket Status change ***/
