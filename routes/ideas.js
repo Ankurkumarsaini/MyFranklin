@@ -235,7 +235,45 @@ router.post('/', function (req, res, next) {
 
 /*** jira code for fetching the to do issue ****/
 function jirafetchtodoIssueHandler(req, res, next){
-    console.log('jira fetch to do issue come here!');
+	
+	var options = {
+		uri: 'https://billsdev.atlassian.net/rest/api/3/search?assignee=Jayakumar Chitiprolu',
+		method: 'GET',
+		json: true,
+		auth: { username: process.env.JIRA_USERNAME, password: process.env.JIRA_PASSWORD },
+		headers: {"Accept": 'application/json',}
+        };
+	
+	return rp(options)
+        .then(response => {
+		var JiraResponse='';
+		for(let i=0;i<Object(response.issues).length;i++){
+		   if(response.issues[i].fields.status.name == 'To Do'){
+			 JiraResponse +='\n*\Project*\: '+ response.issues[i].fields.project.name;	
+			 JiraResponse +='\n*\Issue No*\: '+ response.issues[i].key;
+			 JiraResponse +='\n*\Summary*\:'+ response.issues[i].fields.summary;				 
+			 JiraResponse +='\n*\Status*\:'+ response.issues[i].fields.status.name;
+			 JiraResponse +='\n*\Issue Type*\ :'+ response.issues[i].fields.issuetype.name;
+			 JiraResponse +='\n*\Created On*\:'+ response.issues[i].fields.created;
+			 JiraResponse +='\n*\Created By*\:'+ response.issues[i].fields.creator.displayName;		
+			 JiraResponse +='\n\n';	
+		   }
+		}
+		
+		try 
+		    {
+			const result = app.client.chat.postMessage({
+			token: process.env.TOKEN,
+		        channel: 'D01F46BL5QE',
+			text:"*List of To Do Issue*",
+			attachments:'[{"color": "#3AA3E3","text":"' +  JiraResponse + '"}]',					
+			  });
+		}catch (error) {
+
+			console.log(error);
+		}
+	});	
+    
 }
 
 
