@@ -32,7 +32,7 @@ var Port = process.env.PORT || 8100;
 //app.use('/', indexRouter);
 //app.use('/ideas', ideasRouter);
 //app.use('/gcptasks', gcpTasksRouter);
-app.use('/demo',demoRouter);
+//app.use('/demo',demoRouter);
 app.use('/jiratasks',jiraTasksRouter);
 
 // catch 404 and forward to error handler
