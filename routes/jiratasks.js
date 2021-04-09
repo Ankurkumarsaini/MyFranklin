@@ -7,6 +7,13 @@ const https = require('https');
 const axios = require('axios');
 
 
+router.get('/', function (req, res, next) {    
+	console.log('inside jira tasks');
+    res.send('Successfully connected to Jira Tasks');
+});
+
+/*
+
 const { App, LogLevel } = require("@slack/bolt");
 
 router.get('/', function (req, res, next) {    
@@ -42,7 +49,7 @@ router.post('/', function (req, res, next) {
     }
 });
 
-/*** jira code for fetching the to do issue ****/
+/*** jira code for fetching the to do issue 
 function jirafetchtodoIssueHandler(req, res, next){
 	
 	var options = {
@@ -84,6 +91,7 @@ function jirafetchtodoIssueHandler(req, res, next){
     
 }
 
+*/
 module.exports = router;
             
             
