@@ -1,13 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser')
 const rp = require('request-promise');
-var jiraRouter = express.Router();
 const http = require('http');
 const https = require('https');
 const axios = require('axios');
+const jiraRouter = express.Router();
 
-
-jiraRouter.get('/jiratasks', function (req, res, next) {    
+jiraRouter.get('/', (req, res) => {    
     res.send('Successfully connected to Jira Tasks');
 });
 
@@ -90,5 +89,5 @@ function jirafetchtodoIssueHandler(req, res, next){
     
 }
 
-module.exports = router;
+module.exports = jiraRouter;
  
