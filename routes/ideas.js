@@ -5,6 +5,7 @@ var router = express.Router();
 const http = require('http');
 const https = require('https');
 const axios = require('axios');
+const moment = require('moment-timezone');
 
 const { App, LogLevel } = require("@slack/bolt");
 
@@ -233,7 +234,51 @@ router.post('/', function (req, res, next) {
 });
 
 
-/*** jira code for fetching the to do issue ****/
+
+function jirafetchtodoIssueHandler(req, res, next){
+	
+	var options = {
+		uri:'https://billsdev.atlassian.net/rest/api/3/search?jql=assignee%3D%27Jayakumar%20chitiprolu%27%20order%20by%20created%20DESC',
+		method: 'GET',
+		json: true,
+		auth: { username: process.env.JIRA_USERNAME, password: process.env.JIRA_PASSWORD },
+		headers: {"Accept": 'application/json'}
+        };
+	return rp(options)
+           .then(response => {
+		        var JiraResponse='';
+			// converting the current time to the America/Los_Angeles timezone  and move the date one month back
+			var today = new Date();
+			var previousmonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());			
+			var Americantime    = moment.tz(previousmonth , "America/Los_Angeles");
+
+			for(let i=0;i<Object(response.issues).length;i++){
+				if((response.issues[i].fields.status.name == 'To Do') && (response.issues[i].fields.created >= newYork.format())){
+				      JiraResponse +='\n*\Issue No*\: '+ response.issues[i].key;
+				      JiraResponse +='\n*\Summary*\:'+ response.issues[i].fields.summary;				 
+				      JiraResponse +='\n*\Status*\:'+ response.issues[i].fields.status.name;	
+				}	
+			}
+		  
+		        try 
+			    {
+				const result = app.client.chat.postMessage({
+					token: process.env.TOKEN,
+				        channel: 'D01F46BL5QE',
+					text:"*List of To Do Issue*",
+					attachments:'[{"color": "#f2c744","text":"' +  JiraResponse + '"}]',              		
+				  });
+			}catch (error) {
+				console.log(error);
+			}
+		
+		
+	});	
+	
+	
+	
+}	
+/*** jira code for fetching the to do issue 
 function jirafetchtodoIssueHandler(req, res, next){
 	
 	var options = {
@@ -275,7 +320,7 @@ function jirafetchtodoIssueHandler(req, res, next){
 	});	
     
 }
-
+****/
 
 
 /*** Backlog Ticket Status change ***/
