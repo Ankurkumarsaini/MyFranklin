@@ -10,7 +10,7 @@ var ideasRouter = require('./routes/ideas');
 var gcpTasksRouter = require('./routes/gcpTasks');
 */
 var demoRouter = require('./routes/demo');
-var jiraTasks = require('./routes/jiratasks');
+var jiraTasksRouter = require('./routes/jiratasks');
 
 var app = express();
 
@@ -33,7 +33,7 @@ var Port = process.env.PORT || 8100;
 //app.use('/ideas', ideasRouter);
 //app.use('/gcptasks', gcpTasksRouter);
 app.use('/demo',demoRouter);
-app.use('/jiratasks',jiraTasks);
+app.use('/jiratasks',jiraTasksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
