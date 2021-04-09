@@ -1,13 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser')
 const rp = require('request-promise');
-var router = express.Router();
+var jiraRouter = express.Router();
 const http = require('http');
 const https = require('https');
 const axios = require('axios');
 
 
-router.get('/jiratasks', function (req, res, next) {    
+jiraRouter.get('/jiratasks', function (req, res, next) {    
     res.send('Successfully connected to Jira Tasks');
 });
 
@@ -15,7 +15,7 @@ router.get('/jiratasks', function (req, res, next) {
 
 const { App, LogLevel } = require("@slack/bolt");
 
-router.get('/', function (req, res, next) {    
+jiraRouter.get('/', function (req, res, next) {    
     res.send('Successfully connected to Jira Tasks');
 });
 
@@ -26,7 +26,7 @@ const app = new App({
   logLevel: LogLevel.DEBUG
 });
 
-router.post('/', function (req, res, next) {
+jiraRouter.post('/', function (req, res, next) {
 	
  console.log(req.body.queryResult);	
 	
