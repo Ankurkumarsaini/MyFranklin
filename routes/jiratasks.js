@@ -4,7 +4,7 @@ const rp = require('request-promise');
 const http = require('http');
 const https = require('https');
 const axios = require('axios');
-const jiraRouter = express.Router();
+const jiraRouter = express();
 
 jiraRouter.get('/', (req, res) => {    
     res.send('Successfully connected to Jira Tasks');
