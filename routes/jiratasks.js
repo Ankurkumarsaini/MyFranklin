@@ -7,7 +7,7 @@ const https = require('https');
 const axios = require('axios');
 
 
-router.get('/', function (req, res, next) {    
+router.get('/jiratasks', function (req, res, next) {    
 	console.log('inside jira tasks');
     res.send('Successfully connected to Jira Tasks');
 });
