@@ -10,6 +10,7 @@ var ideasRouter = require('./routes/ideas');
 var gcpTasksRouter = require('./routes/gcpTasks');
 */
 var demoRouter = require('./routes/demo');
+var jiraTasks = require('./routes/jiratasks');
 
 var app = express();
 
