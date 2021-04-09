@@ -8,6 +8,7 @@ router.get('/', function (req, res, next) {
     res.send('INside jira tasks is come here!');
 });
 
+module.exports = router;
 
 /*
 var express = require('express');
@@ -104,27 +105,4 @@ function jirafetchtodoIssueHandler(req, res, next){
 }
 
 */
-module.exports = router;
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+ 
