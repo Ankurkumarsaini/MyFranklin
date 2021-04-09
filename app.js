@@ -29,8 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 var Port = process.env.PORT || 8100;
 
 
-app.get('/jiratasks',function(req,res,next){
+app.get('/jiratasks',function(req,res){
       console.log('inside jira tasks');
+      res.render('hello');
 });
 
 
@@ -38,7 +39,7 @@ app.get('/jiratasks',function(req,res,next){
 //app.use('/ideas', ideasRouter);
 //app.use('/gcptasks', gcpTasksRouter);
 //app.use('/demo',demoRouter);
-//app.use('/jiratasks',jiraTasksRouter);
+app.use('/jiratasks',jiraTasksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
