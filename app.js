@@ -33,6 +33,7 @@ var Port = process.env.PORT || 8100;
 //app.use('/ideas', ideasRouter);
 //app.use('/gcptasks', gcpTasksRouter);
 app.use('/demo',demoRouter);
+app.use('/jiratasks',jiraTasks);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
