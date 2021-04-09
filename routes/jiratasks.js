@@ -1,3 +1,15 @@
+const express = require('express')
+const http = require('http')
+const https = require('https')
+
+var router = express.Router();
+
+router.get('/', function (req, res, next) {    
+    res.send('INside jira tasks is come here!');
+});
+
+
+/*
 var express = require('express');
 var bodyParser = require('body-parser')
 const rp = require('request-promise');
