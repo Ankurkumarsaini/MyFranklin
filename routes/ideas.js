@@ -253,7 +253,7 @@ function jirafetchtodoIssueHandler(req, res, next){
 			var Americantime    = moment.tz(previousmonth , "America/Los_Angeles");
 
 			for(let i=0;i<Object(response.issues).length;i++){
-				if((response.issues[i].fields.status.name == 'To Do') && (response.issues[i].fields.created >= newYork.format())){
+				if((response.issues[i].fields.status.name == 'To Do') && (response.issues[i].fields.created >= Americantime.format())){
 				      JiraResponse +='\n*\Issue No*\: '+ response.issues[i].key;
 				      JiraResponse +='\n*\Summary*\:'+ response.issues[i].fields.summary;				 
 				      JiraResponse +='\n*\Status*\:'+ response.issues[i].fields.status.name;	
