@@ -14,7 +14,7 @@ var jiraTasksRouter = require('./routes/jiratasks');
 
 var app = express();
 
-/*
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
