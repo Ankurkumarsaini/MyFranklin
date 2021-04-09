@@ -1,16 +1,3 @@
-const express = require('express')
-const http = require('http')
-const https = require('https')
-
-var router = express.Router();
-
-router.get('/', function (req, res, next) {    
-    res.send('INside jira tasks is come here!');
-});
-
-module.exports = router;
-
-/*
 var express = require('express');
 var bodyParser = require('body-parser')
 const rp = require('request-promise');
@@ -21,11 +8,10 @@ const axios = require('axios');
 
 
 router.get('/jiratasks', function (req, res, next) {    
-	console.log('inside jira tasks');
     res.send('Successfully connected to Jira Tasks');
 });
 
-/*
+
 
 const { App, LogLevel } = require("@slack/bolt");
 
@@ -62,7 +48,7 @@ router.post('/', function (req, res, next) {
     }
 });
 
-/*** jira code for fetching the to do issue 
+/*** jira code for fetching the to do issue ***/
 function jirafetchtodoIssueHandler(req, res, next){
 	
 	var options = {
@@ -104,5 +90,5 @@ function jirafetchtodoIssueHandler(req, res, next){
     
 }
 
-*/
+module.exports = router;
  
