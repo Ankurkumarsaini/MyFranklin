@@ -596,7 +596,7 @@ function backlogCurrentUserHandler(req, res, next){
 	
 	console.log('finding the slack User details');
 	
-	console.log(req.body);
+	console.log(req.body.originalDetectIntentRequest);
 	
 	
 	
