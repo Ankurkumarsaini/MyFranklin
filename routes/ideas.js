@@ -593,6 +593,13 @@ function backlogOpenIssueHandler(req, res, next){
 /***backlog current user info handler function ****/
 
 function backlogCurrentUserHandler(req, res, next){
+	
+	console.log('finding the slack User details');
+	
+	console.log(req);
+	
+	
+	
 	var options = {
         uri: 'https://droisys.backlog.com/api/v2/users/myself?apiKey='+ process.env.BACKLOG_TOKEN,
         method: 'GET',
